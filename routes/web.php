@@ -96,6 +96,7 @@ Route::get('/file/{id}', [App\Http\Controllers\FileController::class, 'showFile'
 Route::get('auto_download', [App\Http\Controllers\FileController::class, 'autoDownload'])->name('auto-download');
 Route::post('/file_checkout', [App\Http\Controllers\PaymentsController::class, 'fileCart'])->name('checkout-file');
 Route::post('/checkout_file', [App\Http\Controllers\PaymentsController::class, 'checkoutFile'])->name('checkout.file');
+Route::post('get_comments', [App\Http\Controllers\FileController::class, 'getComments'])->name('get-comments');
 // Route::post('/checkout_offer_redirect', [App\Http\Controllers\FileController::class, 'checkoutOfferRedirect'])->name('checkout.stripe.offer');
 // Route::post('/checkout_offer_paypal_redirect', [App\Http\Controllers\FileController::class, 'checkoutOfferPaypalRedirect'])->name('checkout.paypal.offer');
 // Route::post('/checkout_file_paypal', [App\Http\Controllers\PaymentsController::class, 'checkoutFile'])->name('checkout.paypal.file');

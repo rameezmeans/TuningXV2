@@ -56,6 +56,71 @@ class FileController extends Controller
         $this->alientechMainObj = new AlientechMainController();
     }
 
+    public function getComments(Request $request){
+
+        $file = File::findOrFail($request->file_id);
+
+        if($request->ecu){
+
+            // $commentObj = Comment::where('engine', $request->engine);
+
+            $commentObj = Comment::where('comment_type', 'download')->whereNull('subdealer_group_id');
+
+            // $commentObj = Comment::where('engine', $request->engine);
+            // $commentObj = $commentObj->where('comment_type', 'download');
+
+            if($request->make){
+                $commentObj->where('make',$request->make);
+            }
+
+            // if($request->model){
+            //     $commentObj->where('model', $request->model);
+            // }
+
+            if($request->ecu){
+                $commentObj->where('ecu',$request->ecu);
+            }
+
+            // if($request->generation){
+            //     $commentObj->where('generation', $request->generation);
+            // }
+
+            $comments = $commentObj->get()->toArray();
+        }
+        else{
+
+            $comments = [];
+        }
+
+        // if($file->show_comments == 0){
+        //     $comments = [];
+        // }
+        
+        $optionsArray = [];
+
+        foreach($file->options_services as $option){
+            $optionsArray []= Service::findOrFail($option->service_id)->id;
+        }
+
+        $optionComment = "";
+
+        if(sizeof($comments) != 0){
+
+            $optionComment .= '<ul class="bullets">';
+
+            foreach($comments as $comment){
+                if(in_array($comment['service_id'],$optionsArray)){
+                    $optionComment  .= '<li class="comments">'.__($comment['comments']).'</li>';
+                }
+            }
+
+            $optionComment .= '</ul>';
+        }
+
+        return response()->json(['comments'=> $optionComment]);
+
+    }
+
     /**
      * Show the application dashboard.
      *
