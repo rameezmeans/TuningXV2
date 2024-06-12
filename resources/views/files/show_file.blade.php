@@ -1033,7 +1033,7 @@ div.file-type-buttons label > input + img {
 
             @if($row->uploaded_successfully)
 
-            @if($file->no_longer_auto == 0)
+            {{-- @if($file->no_longer_auto == 0) --}}
 
             <div class="main-file-box m-t-40">
               <span>
@@ -1547,7 +1547,7 @@ div.file-type-buttons label > input + img {
 
 
           @endif
-          @endif
+          {{-- @endif --}}
 
           @endforeach
 
