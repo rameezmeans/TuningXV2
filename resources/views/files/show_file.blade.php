@@ -502,10 +502,17 @@ div.file-type-buttons label > input + img {
         <div class="row bt file-mb">
           
           <div class="col-xl-6 col-lg-6 col-md-6 m-t-40" >
+            @if($file->status != "rejected")
             <button class="btn btn-white" id="new-request"><i class="fa fa-code-pull-request"></i> <strong>New Request</strong></button>
-            {{-- <button class="btn btn-white" id="new-support"><i class="fa fa-code-pull-request"></i> <strong>New Support Message</strong></button> --}}
+            @endif
+            
+            @if(!$file->acm_file)
+              <button class="btn btn-white" id="acm-file"><i class="fa fa-cloud-upload"></i> <strong>ACM File</strong></button>
+            @endif
+
             <button class="btn btn-white" id="note-button"><i class="fa fa-cloud-upload"></i> <strong>Add Personal Note</strong></button>
             
+            @if($file->status != "rejected")
             <div class="main-file-box m-t-40 hide" id="new-request-box">
               <div class="card m-t-10">
                 <div class="card-header">
@@ -554,10 +561,10 @@ div.file-type-buttons label > input + img {
                                             <option value="status" selected disabled>{{__('Request Type')}} </option>
                                             <option value="new_upload">{{__('New upload')}}</option>
                                             <option value="tuning_evolution">{{__('Tuning Evolution - I want to make a new tuning request.')}}</option>
-                                            <option value="back_to_tuned">{{__('Back to tuned - The car has been updated by the dealer, please renew the tuning.')}}</option>
+                                            {{-- <option value="back_to_tuned">{{__('Back to tuned - The car has been updated by the dealer, please renew the tuning.')}}</option>
                                             <option value="back_to_stock">{{__('Back to stock - Send me back the original version.')}}</option>
                                             <option value="back_to_stock_with_virtual_read">{{__('Back to stock with virtual read - Its a virtual read, can you send me this file back to flash the car in stock mode?')}}</option>
-                                            <option value="problem_RMA">{{__('Problem - RMA - Ive an issue with this file, can you check?')}}</option>
+                                            <option value="problem_RMA">{{__('Problem - RMA - Ive an issue with this file, can you check?')}}</option> --}}
                                         </select>
                                     </div>
                                     <div class="form-group hide" id="gearbox_file_select">
@@ -616,9 +623,43 @@ div.file-type-buttons label > input + img {
               </div>
             </div>
 
-            {{-- <div class="main-file-box m-t-40 hide" id="new-support-box">
 
-            </div> --}}
+            @endif
+
+            <div class="main-file-box m-t-40 hide" id="acm-file-box">
+
+              <div class="card m-t-10">
+                <div class="card-header">
+                  <div style="margin-bottom: 20px;">
+                    <span style="">
+                      <h4 style="margin-bottom: 10px;">ACM File</h4>
+                      <strong>Pleaes upload ACM File and Engineer will get it.</strong>
+                      <p>
+                        <i style="color: red;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                        <span style="color: darkgray;"></span>
+                      </p>
+                      <div class="row">
+                        <div class="col-xl-12 col-lg-12 col-md-12">
+                      <form method="POST" action="{{ route('acm-file-upload') }}" enctype="multipart/form-data">
+                        @csrf
+                        <input type="hidden" name="file_id" value="{{$file->id}}">
+                          <div class="form-group">
+                            <label for="exampleInputName1">Attachment</label>
+                          <input type="file" name="acm_file" class="form-control" id="acm_file">
+                          </div>
+
+                          <button type="submit" class="btn btn-info"><i class="fa fa-submit"></i> Submit</button>
+                        
+                      </form>
+                        </div>
+                      </div>
+                      
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
 
             <div class="main-file-box m-t-40 hide" id="note-box">
               <div class="card m-t-10">
@@ -697,6 +738,15 @@ div.file-type-buttons label > input + img {
                       </span>
                     <a href="{{route('download', [$file->id,$file->file_attached])}}" class="btn btn-info" style="float: right;"><i class="fa fa-download"></i> Downloand</a>
                     </span>
+                    @if($file->acm_file)
+                    <div class="bt m-t-20 p-t-10">
+                      <span style="display: inline-grid;margin-bottom: 20px;" >
+                        <strong>ACM File Name:</strong>
+                        <span class="f-name">{{$file->acm_file}}</span>
+                      </span>
+                          <a class="btn btn-info" href="{{route('download', [$file->id,$file->acm_file])}}" style="float: right;"><i class="fa fa-download"></i> Downloand</a>
+                    </div>
+                    @endif
                     <div class="bt m-t-10 p-t-10">
                       <span><strong>Stages and Options:</strong></span>
                     </div>
@@ -734,6 +784,112 @@ div.file-type-buttons label > input + img {
                   </div>
                 </div>
               </div>
+            </div>
+
+            <div class="main-file-box m-t-40">
+              <span>
+                <i class="fa fa-download top-box top-box-grey"></i>
+              </span>
+              <h3 style="display: inline; color: #021F7E; margin-left: 20px;">
+                File Support
+              </h3>
+              
+              <div style="padding-left: 60px;" class="card-dt">
+                <div class="card m-t-10">
+                  <div class="card-header">
+                    <div style="margin-bottom: 20px;">
+                      @if(!$file->messages_and_logs()->isEmpty())
+                      @foreach($file->messages_and_logs() as $engineersMessage)
+                        <div class="row bb-light" style="padding: 10px 30px 10px 30px;">
+                          <div>
+                            @if($engineersMessage->engineer)
+                            <div>
+                              <i style="font-size: 24px; color: #B01321;" class="fas fa-user-circle"></i>
+                              <strong style="font-size: 18px;color: #B01321;">Engineer's Reply</strong>
+                              <p style="float: right;">{{ $engineersMessage->created_at->format('d/m/Y')}} at {{$engineersMessage->created_at->format('H:i:s')}}</p>
+                            </div>
+                            @else
+                              
+                              <i style="font-size: 24px;" class="fas fa-user-circle"></i>
+                              @if(isset($engineersMessage->egnineers_internal_notes))
+                                <strong style="font-size: 18px;">Help Request</strong>  
+                              @else
+                                <strong style="font-size: 18px;">Log Entry</strong> 
+                              @endif
+                              <p style="float: right;">{{ $engineersMessage->created_at->format('d/m/Y')}} at {{$engineersMessage->created_at->format('H:i:s')}}</p>
+                            @endif
+                          <p>
+                            @if(isset($engineersMessage->egnineers_internal_notes))
+                              <p>{!!$engineersMessage->egnineers_internal_notes!!}</p>
+                            @else
+                              <p>{{$engineersMessage->events_internal_notes}}</p>
+                            @endif
+                          </div>
+  
+                          @if(isset($engineersMessage->egnineers_internal_notes))
+                          @if($engineersMessage->engineers_attachement)
+                              
+                              <strong class="">Filename: </strong><span class="">{{$engineersMessage->engineers_attachement}}</span>
+                              <a href="{{route('download', [$file->id,$engineersMessage->engineers_attachement])}}" class="btn-sm btn-info" style="float: right;">Download</a>
+                          @endif
+                          @else
+                          @if($engineersMessage->events_attachement)
+                              
+                          <strong class="">Filename: </strong><span class="">{{$engineersMessage->events_attachement}}</span>
+                          <a href="{{route('download', [$file->id,$engineersMessage->events_attachement])}}" class="btn-sm btn-info" style="float: right;">Download</a>
+                          @endif
+                          @endif
+                        </div>
+                      @endforeach
+                        @endif
+                      <div class="m-t-10">
+                        <div class="card-header">
+                          <div style="margin-bottom: 20px;">
+                            <span style="">
+                              <h4 style="margin-bottom: 10px;">Support Message</h4>
+                              <strong></strong>
+                              <p>
+                                <i style="color: red;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                <span style="color: darkgray;">You can send Message to Engineer. Engineers will be notified.</span>
+                              </p>
+                              <div class="row">
+                                <div class="col-xl-12 col-lg-12 col-md-12">
+                              <form method="POST" action="{{ route('file-engineers-notes') }}" enctype="multipart/form-data">
+                                @csrf
+                                <input type="hidden" name="file_id" value="{{$file->id}}">
+        
+                                  <div class="form-group m-t-20">
+                                    
+                                    <textarea class="form-control" style="width: 100%; height: 100px;" id="car-info-memo" name="egnineers_internal_notes" class="materialize-textarea" placeholder="{{__('Support Message.')}}"></textarea>
+                                    @error('egnineers_internal_notes')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="exampleInputName1">Attachment</label>
+                                  <input type="file" name="engineers_attachement" class="form-control" id="engineers_attachement">
+                                  </div>
+        
+                                  <button type="submit" class="btn btn-info"><i class="fa fa-submit"></i> Submit</button>
+                                
+                              </form>
+                                </div>
+                              </div>
+                              
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    
+                    </div>
+  
+                    
+                  </div>
+                </div>
+            </div>
+            
             </div>
 
             @if(!$file->offers->isEmpty())
@@ -774,11 +930,8 @@ div.file-type-buttons label > input + img {
                       @php 
                         
                         $stage = \ECUApp\SharedCode\Models\Service::FindOrFail( $file->stage_offer->service_id);
-                        
-                        if($file->tool_type == 'master')
-                          $creditsProposed += $stage->tuningx_credits;
-                        else
-                          $creditsProposed += $stage->tuningx_slave_credits;
+
+                          $creditsProposed += $stage->credits;
 
                       @endphp
                       @if($stage)
@@ -794,12 +947,8 @@ div.file-type-buttons label > input + img {
                         @php 
                             $op = \ECUApp\SharedCode\Models\Service::FindOrFail( $option->service_id ); 
 
-                            if($file->tool_type == 'master'){
-                              $creditsProposed += $op->optios_stage($file->stage_offer->service_id)->first()->master_credits;
-                            }
-                            else{
-                              $creditsProposed += $op->optios_stage($file->stage_offer->service_id)->first()->slave_credits;
-                            }
+                              $creditsProposed += $op->credits;
+                            
                         @endphp
                         @if($op)
                         <span class="show-stage"><img style="width: 20px;" src="{{ get_logo_for_stages_and_options( $op->name ) }}" alt="{{$op->name}}">
@@ -876,123 +1025,15 @@ div.file-type-buttons label > input + img {
             </div>
             @endif
 
-            @if(!$file->messages_and_logs()->isEmpty())
-
-          <div class="main-file-box m-t-40">
-            <span>
-              <i class="fa fa-download top-box top-box-grey"></i>
-            </span>
-            <h3 style="display: inline; color: #021F7E; margin-left: 20px;">
-              File Support
-            </h3>
-
             
-              
-            <div style="padding-left: 60px;" class="card-dt">
-              <div class="card m-t-10">
-                <div class="card-header">
-                  <div style="margin-bottom: 20px;">
-                    
-
-                    @foreach($file->messages_and_logs() as $engineersMessage)
-                      <div class="row bb-light" style="padding: 10px 30px 10px 30px;">
-                        <div>
-                          @if($engineersMessage->engineer)
-                          <div>
-                            <i style="font-size: 24px; color: #B01321;" class="fas fa-user-circle"></i>
-                            <strong style="font-size: 18px;color: #B01321;">Engineer's Reply</strong>
-                            <p style="float: right;">{{ $engineersMessage->created_at->format('d/m/Y')}} at {{$engineersMessage->created_at->format('H:i:s')}}</p>
-                          </div>
-                          @else
-                            
-                            <i style="font-size: 24px;" class="fas fa-user-circle"></i>
-                            @if(isset($engineersMessage->egnineers_internal_notes))
-                              <strong style="font-size: 18px;">Help Request</strong>  
-                            @else
-                              <strong style="font-size: 18px;">Log Entry</strong> 
-                            @endif
-                            <p style="float: right;">{{ $engineersMessage->created_at->format('d/m/Y')}} at {{$engineersMessage->created_at->format('H:i:s')}}</p>
-                          @endif
-                        <p>
-                          @if(isset($engineersMessage->egnineers_internal_notes))
-                            <p>{{$engineersMessage->egnineers_internal_notes}}</p>
-                          @else
-                            <p>{{$engineersMessage->events_internal_notes}}</p>
-                          @endif
-                        </div>
-
-                        @if(isset($engineersMessage->egnineers_internal_notes))
-                        @if($engineersMessage->engineers_attachement)
-                            
-                            <strong class="">Filename: </strong><span class="">{{$engineersMessage->engineers_attachement}}</span>
-                            <a href="{{route('download', [$file->id,$engineersMessage->engineers_attachement])}}" class="btn-sm btn-info" style="float: right;">Download</a>
-                        @endif
-                        @else
-                        @if($engineersMessage->events_attachement)
-                            
-                        <strong class="">Filename: </strong><span class="">{{$engineersMessage->events_attachement}}</span>
-                        <a href="{{route('download', [$file->id,$engineersMessage->events_attachement])}}" class="btn-sm btn-info" style="float: right;">Download</a>
-                        @endif
-                        @endif
-                      </div>
-                    @endforeach
-
-                    <div class="m-t-10">
-                      <div class="card-header">
-                        <div style="margin-bottom: 20px;">
-                          <span style="">
-                            <h4 style="margin-bottom: 10px;">Support Message</h4>
-                            <strong></strong>
-                            <p>
-                              <i style="color: red;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                              <span style="color: darkgray;">You can send Message to Engineer. Engineers will be notified.</span>
-                            </p>
-                            <div class="row">
-                              <div class="col-xl-12 col-lg-12 col-md-12">
-                            <form method="POST" action="{{ route('file-engineers-notes') }}" enctype="multipart/form-data">
-                              @csrf
-                              <input type="hidden" name="file_id" value="{{$file->id}}">
-      
-                                <div class="form-group m-t-20">
-                                  
-                                  <textarea class="form-control" style="width: 100%; height: 100px;" id="car-info-memo" name="egnineers_internal_notes" class="materialize-textarea" placeholder="{{__('Support Message.')}}"></textarea>
-                                  @error('egnineers_internal_notes')
-                                      <span class="invalid-feedback" role="alert">
-                                          <strong>{{ $message }}</strong>
-                                      </span>
-                                  @enderror
-                                </div>
-                                <div class="form-group">
-                                  <label for="exampleInputName1">Attachment</label>
-                                <input type="file" name="engineers_attachement" class="form-control" id="engineers_attachement">
-                                </div>
-      
-                                <button type="submit" class="btn btn-info"><i class="fa fa-submit"></i> Submit</button>
-                              
-                            </form>
-                              </div>
-                            </div>
-                            
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  
-                  </div>
-
-                  
-                </div>
-              </div>
-          </div>
-          </div>
-
-          @endif
 
             @foreach($file->files as $row)
 
             @if($row->is_kess3_slave)
 
-                    @if($row->uploaded_successfully)
+            @if($row->uploaded_successfully)
+
+            @if($file->no_longer_auto == 0)
 
             <div class="main-file-box m-t-40">
               <span>
@@ -1036,28 +1077,22 @@ div.file-type-buttons label > input + img {
                   @else
                     <a class="btn btn-info" href="{{route('download', [$row->file_id,$row->request_file])}}" style="float: right;"><i class="fa fa-download"></i> Downloand</a>
                   @endif
-
                 </span>
 
                 @if($file->acm_file)
-              
                 @if($row->acm_files)
               @foreach($row->acm_files as $acm)
                 <div class="bt m-t-20 p-t-10">
-                  
-                  
                   <span style="display: inline-grid;margin-bottom: 20px;" >
                     <strong>ACM File Name:</strong>
                     <span class="f-name">{{$acm->acm_file}}</span>
                   </span>
                       <a class="btn btn-info" href="{{route('download', [$file->id,$acm->acm_file])}}" style="float: right;"><i class="fa fa-download"></i> Downloand</a>
-                    
-                  
                 </div>
               @endforeach
               @endif
               @endif
-                
+
                 <div class="bt m-t-10 p-t-10">
                   <span><strong>Stages and Options:</strong></span>
                 </div>
@@ -1091,61 +1126,9 @@ div.file-type-buttons label > input + img {
                   </div>
                 </div>
                 
-                @if(!$row->messages_and_logs()->isEmpty())
-                <div class="bt m-t-20 text-center collapsible-ecu">
-                  <h4 style="margin-top: 20px;"><i class="fa @if(Session::has('success')) fa-chevron-circle-down @else fa-chevron-circle-up @endif" id="arrow-message"></i> Support Messages</h4>
-                </div>
-                  <div class="bt m-t-20 p-t-10 red-scroll content-ecu" @if(Session::has('success')) style="display: block;" @endif>
-                    @foreach($row->messages_and_logs() as $engineersMessage)
-                      <div class="row bb-light" style="padding: 10px 30px 10px 30px;">
-                        <div>
-                          @if($engineersMessage->engineer)
-                          <div>
-                            <i style="font-size: 24px; color: #B01321;" class="fas fa-user-circle"></i>
-                            <strong style="font-size: 18px;color: #B01321;">Engineer's Reply</strong>
-                            <p style="float: right;">{{ $engineersMessage->created_at->format('d/m/Y')}} at {{$engineersMessage->created_at->format('H:i:s')}}</p>
-                          </div>
-                          @else
-                            
-                            <i style="font-size: 24px;" class="fas fa-user-circle"></i>
-                            @if(isset($engineersMessage->egnineers_internal_notes))
-                              <strong style="font-size: 18px;">Help Request</strong>  
-                            @else
-                              <strong style="font-size: 18px;">Log Entry</strong> 
-                            @endif
-                            <p style="float: right;">{{ $engineersMessage->created_at->format('d/m/Y')}} at {{$engineersMessage->created_at->format('H:i:s')}}</p>
-                          @endif
-                        <p>
-                          @if(isset($engineersMessage->egnineers_internal_notes))
-                            <p>{{$engineersMessage->egnineers_internal_notes}}</p>
-                          @else
-                            <p>{{$engineersMessage->events_internal_notes}}</p>
-                          @endif
-                        </div>
-
-                        @if(isset($engineersMessage->egnineers_internal_notes))
-                        @if($engineersMessage->engineers_attachement)
-                            
-                            <strong class="">Filename: </strong><span class="">{{$engineersMessage->engineers_attachement}}</span>
-                            <a href="{{route('download', [$file->id,$engineersMessage->engineers_attachement])}}" class="btn-sm btn-info" style="float: right;">Download</a>
-                        @endif
-                        @else
-                        @if($engineersMessage->events_attachement)
-                            
-                        <strong class="">Filename: </strong><span class="">{{$engineersMessage->events_attachement}}</span>
-                        <a href="{{route('download', [$file->id,$engineersMessage->events_attachement])}}" class="btn-sm btn-info" style="float: right;">Download</a>
-                        @endif
-                        @endif
-                      </div>
-                    @endforeach
-                    
-                  </div>
-                @endif
-                
-
                 <div class="m-t-20 bt">
                   <ul class="nav nav-tabs fl-nav fl-nav-mb" style="border-bottom: 0px; padding: 10px 0;">
-                    <li  class="active">
+                    {{-- <li  class="active">
                       <a style="border: none;" data-toggle="tab" href="#support-{{$row->id}}">
                         <button class="btn btn-white">
                           <i>
@@ -1153,14 +1136,14 @@ div.file-type-buttons label > input + img {
                           </i> Engineer Support
                         </button>
                       </a>
-                    </li>
+                    </li> --}}
                     <li><a style="border: none;" data-toggle="tab" href="#log-{{$row->id}}"><button class="btn btn-white"><i class="fa fa-file" style="transform: rotate(-90deg)"></i> Add Log</button></a></li>
                     <li><a style="border: none;" data-toggle="tab" href="#star-{{$row->id}}"><button class="btn btn-white"><i class="fa fa-star"></i> Add a Rating</button></a></li>
                     
                   </ul>
                   
                   <div class="tab-content">
-                    <div id="support-{{$row->id}}" class="tab-pane fade active in">
+                    {{-- <div id="support-{{$row->id}}" class="tab-pane fade active in">
 
                       <div class="row">
                         <div class="col-xl-12 col-lg-12 col-md-12">
@@ -1189,7 +1172,7 @@ div.file-type-buttons label > input + img {
                       </div>
                       </div>
 
-                    </div>
+                    </div> --}}
                     <div id="log-{{$row->id}}" class="tab-pane fade">
 
                       <div class="row">
@@ -1327,9 +1310,9 @@ div.file-type-buttons label > input + img {
                 </span>
               </div>
 
-              <span class="file-name-box">
-                <span style="display: inline-grid;">
-                  <strong>File Name:</strong>
+              <span class="file-name-box" style="margin-bottom: 20px;">
+                <span style="display: inline-grid;" >
+                  <strong>ECU File Name:</strong>
                   <span class="f-name">{{$row->request_file}}</span>
                 </span>
 
@@ -1404,61 +1387,9 @@ div.file-type-buttons label > input + img {
                 </div>
               </div>
               
-              @if(!$row->messages_and_logs()->isEmpty())
-              <div class="bt m-t-20 text-center collapsible-ecu">
-                <h4 style="margin-top: 20px;"><i class="fa @if(Session::has('success')) fa-chevron-circle-down @else fa-chevron-circle-up @endif" id="arrow-message"></i> Support Messages</h4>
-              </div>
-                <div class="bt m-t-20 p-t-10 red-scroll content-ecu" @if(Session::has('success')) style="display: block;" @endif>
-                  @foreach($row->messages_and_logs() as $engineersMessage)
-                    <div class="row bb-light" style="padding: 10px 30px 10px 30px;">
-                      <div>
-                        @if($engineersMessage->engineer)
-                        <div>
-                          <i style="font-size: 24px; color: #B01321;" class="fas fa-user-circle"></i>
-                          <strong style="font-size: 18px;color: #B01321;">Engineer's Reply</strong>
-                          <p style="float: right;">{{ $engineersMessage->created_at->format('d/m/Y')}} at {{$engineersMessage->created_at->format('H:i:s')}}</p>
-                        </div>
-                        @else
-                          
-                          <i style="font-size: 24px;" class="fas fa-user-circle"></i>
-                          @if(isset($engineersMessage->egnineers_internal_notes))
-                            <strong style="font-size: 18px;">Help Request</strong>  
-                          @else
-                            <strong style="font-size: 18px;">Log Entry</strong> 
-                          @endif
-                          <p style="float: right;">{{ $engineersMessage->created_at->format('d/m/Y')}} at {{$engineersMessage->created_at->format('H:i:s')}}</p>
-                        @endif
-                      <p>
-                        @if(isset($engineersMessage->egnineers_internal_notes))
-                          <p>{{$engineersMessage->egnineers_internal_notes}}</p>
-                        @else
-                          <p>{{$engineersMessage->events_internal_notes}}</p>
-                        @endif
-                      </div>
-
-                      @if(isset($engineersMessage->egnineers_internal_notes))
-                      @if($engineersMessage->engineers_attachement)
-                          
-                          <strong class="">Filename: </strong><span class="">{{$engineersMessage->engineers_attachement}}</span>
-                          <a href="{{route('download', [$file->id,$engineersMessage->engineers_attachement])}}" class="btn-sm btn-info" style="float: right;">Download</a>
-                      @endif
-                      @else
-                      @if($engineersMessage->events_attachement)
-                          
-                      <strong class="">Filename: </strong><span class="">{{$engineersMessage->events_attachement}}</span>
-                      <a href="{{route('download', [$file->id,$engineersMessage->events_attachement])}}" class="btn-sm btn-info" style="float: right;">Download</a>
-                      @endif
-                      @endif
-                    </div>
-                  @endforeach
-                  
-                </div>
-              @endif
-              
-
               <div class="m-t-20 bt">
                 <ul class="nav nav-tabs fl-nav fl-nav-mb" style="border-bottom: 0px; padding: 10px 0;">
-                  <li  class="active">
+                  {{-- <li  class="active">
                     <a style="border: none;" data-toggle="tab" href="#support-{{$row->id}}">
                       <button class="btn btn-white">
                         <i>
@@ -1466,14 +1397,14 @@ div.file-type-buttons label > input + img {
                         </i> Engineer Support
                       </button>
                     </a>
-                  </li>
+                  </li> --}}
                   <li><a style="border: none;" data-toggle="tab" href="#log-{{$row->id}}"><button class="btn btn-white"><i class="fa fa-file" style="transform: rotate(-90deg)"></i> Add Log</button></a></li>
                   <li><a style="border: none;" data-toggle="tab" href="#star-{{$row->id}}"><button class="btn btn-white"><i class="fa fa-star"></i> Add a Rating</button></a></li>
                   
                 </ul>
                 
                 <div class="tab-content">
-                  <div id="support-{{$row->id}}" class="tab-pane fade active in">
+                  {{-- <div id="support-{{$row->id}}" class="tab-pane fade active in">
 
                     <div class="row">
                       <div class="col-xl-12 col-lg-12 col-md-12">
@@ -1502,7 +1433,7 @@ div.file-type-buttons label > input + img {
                     </div>
                     </div>
 
-                  </div>
+                  </div> --}}
                   <div id="log-{{$row->id}}" class="tab-pane fade">
 
                     <div class="row">
@@ -1616,6 +1547,7 @@ div.file-type-buttons label > input + img {
 
 
           @endif
+          @endif
 
           @endforeach
 
@@ -1649,22 +1581,11 @@ div.file-type-buttons label > input + img {
                   <span class="file-name-box">
                     
                     <span style="display: inline-grid;">
-                      <strong>File Name:</strong>
+                      <strong>ECU File Name:</strong>
                       <span class="f-name">{{$file->file_attached}}</span>
                     </span>
                   <a href="{{route('download', [$file->id,$file->file_attached])}}" class="btn btn-info" style="float: right;"><i class="fa fa-download"></i> Downloand</a>
                   </span>
-
-                  @if($file->acm_file)
-                    <div class="bt m-t-20 p-t-10">
-                      <span style="display: inline-grid;margin-bottom: 20px;" >
-                        <strong>ACM File Name:</strong>
-                        <span class="f-name">{{$file->acm_file}}</span>
-                      </span>
-                          <a class="btn btn-info" href="{{route('download', [$file->id,$file->acm_file])}}" style="float: right;"><i class="fa fa-download"></i> Downloand</a>
-                    </div>
-                    @endif
-                    
                   <div class="bt m-t-10 p-t-10">
                     <span><strong>Stages and Options:</strong></span>
                   </div>
@@ -1704,6 +1625,112 @@ div.file-type-buttons label > input + img {
             </div>
           </div>
 
+          <div class="main-file-box m-t-40">
+            <span>
+              <i class="fa fa-download top-box top-box-grey"></i>
+            </span>
+            <h3 style="display: inline; color: #021F7E; margin-left: 20px;">
+              File Support
+            </h3>
+            
+            <div style="padding-left: 60px;" class="card-dt">
+              <div class="card m-t-10">
+                <div class="card-header">
+                  <div style="margin-bottom: 20px;">
+                    @if(!$file->messages_and_logs()->isEmpty())
+                    @foreach($file->messages_and_logs() as $engineersMessage)
+                      <div class="row bb-light" style="padding: 10px 30px 10px 30px;">
+                        <div>
+                          @if($engineersMessage->engineer)
+                          <div>
+                            <i style="font-size: 24px; color: #B01321;" class="fas fa-user-circle"></i>
+                            <strong style="font-size: 18px;color: #B01321;">Engineer's Reply</strong>
+                            <p style="float: right;">{{ $engineersMessage->created_at->format('d/m/Y')}} at {{$engineersMessage->created_at->format('H:i:s')}}</p>
+                          </div>
+                          @else
+                            
+                            <i style="font-size: 24px;" class="fas fa-user-circle"></i>
+                            @if(isset($engineersMessage->egnineers_internal_notes))
+                              <strong style="font-size: 18px;">Help Request</strong>  
+                            @else
+                              <strong style="font-size: 18px;">Log Entry</strong> 
+                            @endif
+                            <p style="float: right;">{{ $engineersMessage->created_at->format('d/m/Y')}} at {{$engineersMessage->created_at->format('H:i:s')}}</p>
+                          @endif
+                        <p>
+                          @if(isset($engineersMessage->egnineers_internal_notes))
+                            <p>{!!$engineersMessage->egnineers_internal_notes!!}</p>
+                          @else
+                            <p>{{$engineersMessage->events_internal_notes}}</p>
+                          @endif
+                        </div>
+
+                        @if(isset($engineersMessage->egnineers_internal_notes))
+                        @if($engineersMessage->engineers_attachement)
+                            
+                            <strong class="">Filename: </strong><span class="">{{$engineersMessage->engineers_attachement}}</span>
+                            <a href="{{route('download', [$file->id,$engineersMessage->engineers_attachement])}}" class="btn-sm btn-info" style="float: right;">Download</a>
+                        @endif
+                        @else
+                        @if($engineersMessage->events_attachement)
+                            
+                        <strong class="">Filename: </strong><span class="">{{$engineersMessage->events_attachement}}</span>
+                        <a href="{{route('download', [$file->id,$engineersMessage->events_attachement])}}" class="btn-sm btn-info" style="float: right;">Download</a>
+                        @endif
+                        @endif
+                      </div>
+                    @endforeach
+                      @endif
+                    <div class="m-t-10">
+                      <div class="card-header">
+                        <div style="margin-bottom: 20px;">
+                          <span style="">
+                            <h4 style="margin-bottom: 10px;">Support Message</h4>
+                            <strong></strong>
+                            <p>
+                              <i style="color: red;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                              <span style="color: darkgray;">You can send Message to Engineer. Engineers will be notified.</span>
+                            </p>
+                            <div class="row">
+                              <div class="col-xl-12 col-lg-12 col-md-12">
+                            <form method="POST" action="{{ route('file-engineers-notes') }}" enctype="multipart/form-data">
+                              @csrf
+                              <input type="hidden" name="file_id" value="{{$file->id}}">
+      
+                                <div class="form-group m-t-20">
+                                  
+                                  <textarea class="form-control" style="width: 100%; height: 100px;" id="car-info-memo" name="egnineers_internal_notes" class="materialize-textarea" placeholder="{{__('Support Message.')}}"></textarea>
+                                  @error('egnineers_internal_notes')
+                                      <span class="invalid-feedback" role="alert">
+                                          <strong>{{ $message }}</strong>
+                                      </span>
+                                  @enderror
+                                </div>
+                                <div class="form-group">
+                                  <label for="exampleInputName1">Attachment</label>
+                                <input type="file" name="engineers_attachement" class="form-control" id="engineers_attachement">
+                                </div>
+      
+                                <button type="submit" class="btn btn-info"><i class="fa fa-submit"></i> Submit</button>
+                              
+                            </form>
+                              </div>
+                            </div>
+                            
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  
+                  </div>
+
+                  
+                </div>
+              </div>
+          </div>
+          
+          </div>
+          
           @if(!$file->offers->isEmpty())
             @php $difference=0; 
             $creditsProposed = 0;
@@ -1742,11 +1769,8 @@ div.file-type-buttons label > input + img {
                       @php 
                         
                         $stage = \ECUApp\SharedCode\Models\Service::FindOrFail( $file->stage_offer->service_id);
-                        
-                        if($file->tool_type == 'master')
-                          $creditsProposed += $stage->tuningx_credits;
-                        else
-                          $creditsProposed += $stage->tuningx_slave_credits;
+                      
+                          $creditsProposed += $stage->credits;
 
                       @endphp
                       @if($stage)
@@ -1762,12 +1786,8 @@ div.file-type-buttons label > input + img {
                         @php 
                             $op = \ECUApp\SharedCode\Models\Service::FindOrFail( $option->service_id ); 
 
-                            if($file->tool_type == 'master'){
-                              $creditsProposed += $op->optios_stage($file->stage_offer->service_id)->first()->master_credits;
-                            }
-                            else{
-                              $creditsProposed += $op->optios_stage($file->stage_offer->service_id)->first()->slave_credits;
-                            }
+                            $creditsProposed += $op->credits;
+                            
                         @endphp
                         @if($op)
                         <span class="show-stage"><img style="width: 20px;" src="{{ get_logo_for_stages_and_options( $op->name ) }}" alt="{{$op->name}}">
@@ -1814,6 +1834,7 @@ div.file-type-buttons label > input + img {
 
             @endif
 
+
             @if($file->status == 'rejected')
             <div class="main-file-box m-t-40">
               <span>
@@ -1844,6 +1865,8 @@ div.file-type-buttons label > input + img {
             </div>
             @endif
 
+            
+
             @foreach($file->files as $row)
             <div class="main-file-box m-t-40">
               <span>
@@ -1867,7 +1890,7 @@ div.file-type-buttons label > input + img {
 
                 <span>
                   <span style="display: inline-grid;">
-                    <strong>File Name:</strong>
+                    <strong>ECU File Name:</strong>
                     <span>{{$row->request_file}}</span>
                   </span>
 
@@ -1886,26 +1909,6 @@ div.file-type-buttons label > input + img {
                   @endif
 
                 </span>
-
-                @if($file->acm_file)
-              
-                @if($row->acm_files)
-              @foreach($row->acm_files as $acm)
-                <div class="bt m-t-20 p-t-10">
-                  
-                  
-                  <span style="display: inline-grid;margin-bottom: 20px;" >
-                    <strong>ACM File Name:</strong>
-                    <span class="f-name">{{$acm->acm_file}}</span>
-                  </span>
-                      <a class="btn btn-info" href="{{route('download', [$file->id,$acm->acm_file])}}" style="float: right;"><i class="fa fa-download"></i> Downloand</a>
-                    
-                  
-                </div>
-              @endforeach
-              @endif
-              @endif
-
                 <div class="bt m-t-10 p-t-10">
                   <span><strong>Stages and Options:</strong></span>
                 </div>
@@ -1939,7 +1942,7 @@ div.file-type-buttons label > input + img {
                   </div>
                 </div>
                 
-                @if(!$row->messages_and_logs()->isEmpty())
+                {{-- @if(!$row->messages_and_logs()->isEmpty())
                 <div class="bt m-t-20 text-center collapsible-ecu">
                   <h4 style="margin-top: 20px;"><i class="fa @if(Session::has('success')) fa-chevron-circle-down @else fa-chevron-circle-up @endif" id="arrow-message"></i> Support Messages</h4>
                 </div>
@@ -1965,7 +1968,7 @@ div.file-type-buttons label > input + img {
                           @endif
                         <p>
                           @if(isset($engineersMessage->egnineers_internal_notes))
-                            <p>{{$engineersMessage->egnineers_internal_notes}}</p>
+                            <p>{!!$engineersMessage->egnineers_internal_notes!!}</p>
                           @else
                             <p>{{$engineersMessage->events_internal_notes}}</p>
                           @endif
@@ -1989,11 +1992,11 @@ div.file-type-buttons label > input + img {
                     
                   </div>
                 @endif
-                
+                 --}}
 
                 <div class="m-t-20 bt">
                   <ul class="nav nav-tabs fl-nav" style="border-bottom: 0px; padding: 10px 0;">
-                    <li  class="active">
+                    {{-- <li  class="active">
                       <a style="border: none;" data-toggle="tab" href="#support-{{$row->id}}">
                         <button class="btn btn-white">
                           <i>
@@ -2001,14 +2004,14 @@ div.file-type-buttons label > input + img {
                           </i> Engineer Support
                         </button>
                       </a>
-                    </li>
-                    <li><a style="border: none;" data-toggle="tab" href="#log-{{$row->id}}"><button class="btn btn-white"><i class="fa fa-file" style="transform: rotate(-90deg)"></i> Add Log</button></a></li>
+                    </li> --}}
+                    <li class="active"><a style="border: none;" data-toggle="tab" href="#log-{{$row->id}}"><button class="btn btn-white"><i class="fa fa-file" style="transform: rotate(-90deg)"></i> Add Log</button></a></li>
                     <li><a style="border: none;" data-toggle="tab" href="#star-{{$row->id}}"><button class="btn btn-white"><i class="fa fa-star"></i> Add a Rating</button></a></li>
                     
                   </ul>
                   
                   <div class="tab-content">
-                    <div id="support-{{$row->id}}" class="tab-pane fade active in">
+                    {{-- <div id="support-{{$row->id}}" class="tab-pane fade active in">
 
                       <div class="row">
                         <div class="col-xl-12 col-lg-12 col-md-12">
@@ -2037,8 +2040,8 @@ div.file-type-buttons label > input + img {
                       </div>
                       </div>
 
-                    </div>
-                    <div id="log-{{$row->id}}" class="tab-pane fade">
+                    </div> --}}
+                    <div id="log-{{$row->id}}" class="tab-pane fade active in">
 
                       <div class="row">
                         <div class="col-xl-12 col-lg-12 col-md-12">
@@ -2591,44 +2594,69 @@ div.file-type-buttons label > input + img {
 
     $(document).on('click', '#new-request', function() {
 
-      if($('#new-request-box').hasClass('hide')){
         $('#new-request-box').removeClass('hide');
         $(this).removeClass('btn-white');
         $(this).addClass('btn-grey');
-      }
-      else{
-        $('#new-request-box').addClass('hide');
-        $(this).removeClass('btn-grey');
-        $(this).addClass('btn-white');
-      }
+
+        $('#note-box').addClass('hide');
+        $('#note-button').removeClass('btn-grey');
+        $('#note-button').addClass('btn-white');
+
+        $('#acm-file-box').addClass('hide');
+      $('#acm-file').removeClass('btn-grey');
+      $('#acm-file').addClass('btn-white');
+      
     });
 
-    // $(document).on('click', '#new-support', function() {
+    
 
-    //   if($('#new-support-box').hasClass('hide')){
-    //     $('#new-request-box').removeClass('hide');
-    //     $(this).removeClass('btn-white');
-    //     $(this).addClass('btn-grey');
-    //   }
-    //   else{
-    //     $('#new-request-box').addClass('hide');
-    //     $(this).removeClass('btn-grey');
-    //     $(this).addClass('btn-white');
-    //   }
-    //   });
+    $(document).on('click', '#acm-file', function() {
+
+      $('#acm-file-box').removeClass('hide');
+      $(this).removeClass('btn-white');
+      $(this).addClass('btn-grey');
+
+      $('#note-box').addClass('hide');
+      $('#note-button').removeClass('btn-grey');
+      $('#note-button').addClass('btn-white');
+
+      $('#new-request-box').addClass('hide');
+      $('#new-request').removeClass('btn-grey');
+      $('#new-request').addClass('btn-white');
+
+    });
+
+    
+
+    $(document).on('click', '#new-request', function() {
+
+      $('#new-request-box').removeClass('hide');
+      $(this).removeClass('btn-white');
+      $(this).addClass('btn-grey');
+
+      $('#note-box').addClass('hide');
+      $('#note-button').removeClass('btn-grey');
+      $('#note-button').addClass('btn-white');
+
+      $('#acm-file-box').addClass('hide');
+      $('#acm-file').removeClass('btn-grey');
+      $('#acm-file').addClass('btn-white');
+
+    });
 
       $(document).on('click', '#note-button', function() {
-
-      if($('#note-box').hasClass('hide')){
         $('#note-box').removeClass('hide');
         $(this).removeClass('btn-white');
         $(this).addClass('btn-grey');
-      }
-      else{
-        $('#note-box').addClass('hide');
-        $(this).removeClass('btn-grey');
-        $(this).addClass('btn-white');
-      }
+
+        $('#new-request-box').addClass('hide');
+        $('#new-request').removeClass('btn-grey');
+        $('#new-request').addClass('btn-white');
+
+        $('#acm-file-box').addClass('hide');
+      $('#acm-file').removeClass('btn-grey');
+      $('#acm-file').addClass('btn-white');
+      
       });
       
       $(document).on('click', '.feedback li', function() {
