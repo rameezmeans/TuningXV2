@@ -114,6 +114,7 @@ Route::get('pay_offer_credits/{id}', [App\Http\Controllers\FileController::class
 Route::post('add_offer_file', [App\Http\Controllers\FileController::class, 'addOfferToFile'])->name('add-offer-to-file');
 Route::post('offer_checkout', [App\Http\Controllers\PaymentsController::class, 'offerCheckout'])->name('offer-checkout');
 Route::post('buy_offer', [App\Http\Controllers\PaymentsController::class, 'buyOffer'])->name('buy.offer');
+Route::post('acm_file_upload', [App\Http\Controllers\FileController::class, 'acmFileUpload'])->name('acm-file-upload');
 
 Route::post('/viva_payment', [App\Http\Controllers\PaymentsController::class, 'redirectViva'])->name('checkout.viva');
 Route::post('/viva_payment_packages', [App\Http\Controllers\PaymentsController::class, 'redirectVivaPackages'])->name('checkout.packages.viva');
