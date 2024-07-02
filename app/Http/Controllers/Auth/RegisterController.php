@@ -335,7 +335,9 @@ class RegisterController extends Controller
 
         }
 
-        return $this->authMainObj->VATCheckPolicy($user);
+        $this->authMainObj->VATCheckPolicy($user);
+
+        return $user;
         
     }   
 }
