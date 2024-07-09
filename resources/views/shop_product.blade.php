@@ -117,7 +117,7 @@
                 <div class="card-content">
   
                   <h3>1 Credit</h3>
-                  <strong>10Є</strong>
+                  <strong>{{$price}}Є</strong>
                 
                   <p class="m-t-20">Using this service only once.</p>
                   <button class="btn btn-cart" id="addToCart"><i class="fa fa-shopping-cart"></i> Add To Cart</button>
