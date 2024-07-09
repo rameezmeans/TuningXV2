@@ -95,7 +95,7 @@ input.qty-input {
                   </table>
                   @if(country_to_continent(Auth::user()->country) == 'Europe')
                     @if(Auth::user()->country != 'GR')
-                      @if(Auth::user()->group->slug == 'VAT0')
+                      @if(Auth::user()->group->slug == 'VAT0-TuningX')
                         <p class="text-success" style="margin-top: 20px; font-size: 12px;">*Valid EU VAT number.</p>
                       @else
                         <p class="text-red" style="margin-top: 20px; font-size: 12px;;">* You did not add a valid EU VAT number in Accounts settings or the VAT number can't be validated at the moment.
