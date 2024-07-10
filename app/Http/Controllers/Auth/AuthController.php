@@ -96,7 +96,7 @@ class AuthController extends Controller
         $validationArray = $this->authMainObj->getValidationRules($data);
         $request->validate($validationArray);
 
-        $user = $this->authMainObj->registration($data);
+        $user = $this->authMainObj->registration($data, 2);
          
         if( $this->authMainObj->loginRule($this->frontEndID, $user) ){
 
