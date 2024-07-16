@@ -401,16 +401,25 @@ class PaymentsController extends Controller
         }
         else if($type == 'paypal'){
 
+            $configArr = config('paypal');
+
+            $configArr['live']['client_id'] = $user->paypal_payment_account()->key;
+            $configArr['live']['client_secret'] = $user->paypal_payment_account()->secret;
+
             // $sessionID = $request->get('PayerID');
             PayPal::setProvider();
             $paypalProvider = PayPal::getProvider();
-            $paypalProvider->setApiCredentials(config('paypal'));
+            $paypalProvider->setApiCredentials($configArr);
             $paypalProvider->setAccessToken($paypalProvider->getAccessToken());   
             $token = $request->get('token');
 
             $orderInfo = $paypalProvider->showOrderDetails($token);
             $response = $paypalProvider->capturePaymentOrder($token);
+
+            // dd($response);
+
             $sessionID = $response['id'];
+            
         }
 
         if($offer){ 
