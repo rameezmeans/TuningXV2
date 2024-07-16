@@ -196,6 +196,11 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\BootstrapServiceProvider::class,
 
+        
+        Srmklive\PayPal\Providers\PayPalServiceProvider::class,
+
+        
+
     ],
 
     /*
