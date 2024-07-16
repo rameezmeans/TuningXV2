@@ -12,8 +12,8 @@ return [
         'app_id'            => 'APP-80W284485P519543T',
     ],
     'live' => [
-        'client_id'         => '',
-        'client_secret'     => '',
+        'client_id'         => 'test',
+        'client_secret'     => 'test',
         'app_id'            => env('PAYPAL_LIVE_APP_ID', ''),
     ],
 
