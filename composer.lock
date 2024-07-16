@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e30aa45c76957d5832cd312f0d1855dc",
+    "content-hash": "d65b8a1f6f9bded8d6a123c57b50e508",
     "packages": [
         {
             "name": "asad/oauth2-zoho",
@@ -5490,12 +5490,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:rameezmeans/ecutech-shared-code.git",
-                "reference": "96f5a6f1cdb7b1f5e8d925453c16b3253767115b"
+                "reference": "20aac3dfc6c4cc54a268b79e37d5d92d40dbe003"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rameezmeans/ecutech-shared-code/zipball/96f5a6f1cdb7b1f5e8d925453c16b3253767115b",
-                "reference": "96f5a6f1cdb7b1f5e8d925453c16b3253767115b",
+                "url": "https://api.github.com/repos/rameezmeans/ecutech-shared-code/zipball/20aac3dfc6c4cc54a268b79e37d5d92d40dbe003",
+                "reference": "20aac3dfc6c4cc54a268b79e37d5d92d40dbe003",
                 "shasum": ""
             },
             "default-branch": true,
@@ -5519,7 +5519,7 @@
                 "source": "https://github.com/rameezmeans/ecutech-shared-code/tree/main",
                 "issues": "https://github.com/rameezmeans/ecutech-shared-code/issues"
             },
-            "time": "2024-07-10T14:30:43+00:00"
+            "time": "2024-07-16T04:16:57+00:00"
         },
         {
             "name": "ramsey/collection",
@@ -6222,6 +6222,72 @@
                 }
             ],
             "time": "2024-06-13T07:21:06+00:00"
+        },
+        {
+            "name": "srmklive/paypal",
+            "version": "3.0.32",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/srmklive/laravel-paypal.git",
+                "reference": "031d69d7c99f9ef0874a34cb85326ede28cd7aed"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/srmklive/laravel-paypal/zipball/031d69d7c99f9ef0874a34cb85326ede28cd7aed",
+                "reference": "031d69d7c99f9ef0874a34cb85326ede28cd7aed",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "guzzlehttp/guzzle": "~7.0",
+                "illuminate/support": "~6.0|~7.0|~8.0|~9.0|^10.0|^11.0",
+                "nesbot/carbon": "~2.0|^3.0",
+                "php": ">=7.2|^8.0"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^1.10",
+                "phpunit/phpunit": "^8.0|^9.0|^10.0|^11.0",
+                "symfony/var-dumper": "~5.0|^6.0|^7.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Srmklive\\PayPal\\Providers\\PayPalServiceProvider"
+                    ],
+                    "aliases": {
+                        "PayPal": "Srmklive\\PayPal\\Facades\\PayPal"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Srmklive\\PayPal\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Raza Mehdi",
+                    "email": "srmk@outlook.com"
+                }
+            ],
+            "description": "Laravel plugin For Processing Payments Through Paypal Express Checkout. Can Be Used Independently With Other Applications.",
+            "keywords": [
+                "http",
+                "laravel paypal",
+                "paypal",
+                "rest",
+                "web service"
+            ],
+            "support": {
+                "issues": "https://github.com/srmklive/laravel-paypal/issues",
+                "source": "https://github.com/srmklive/laravel-paypal/tree/3.0.32"
+            },
+            "time": "2024-06-24T14:34:51+00:00"
         },
         {
             "name": "stripe/stripe-php",

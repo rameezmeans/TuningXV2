@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Log;
 
 use Deyjandi\VivaWallet\VivaWallet;
 use Deyjandi\VivaWallet\Payment;
+use Srmklive\PayPal\Facades\PayPal;
 
 class PaymentsController extends Controller
 {
@@ -399,7 +400,17 @@ class PaymentsController extends Controller
             $sessionID = $request->get('session_id');
         }
         else if($type == 'paypal'){
-            $sessionID = $request->get('paymentId');
+
+            // $sessionID = $request->get('PayerID');
+            PayPal::setProvider();
+            $paypalProvider = PayPal::getProvider();
+            $paypalProvider->setApiCredentials(config('paypal'));
+            $paypalProvider->setAccessToken($paypalProvider->getAccessToken());   
+            $token = $request->get('token');
+
+            $orderInfo = $paypalProvider->showOrderDetails($token);
+            $response = $paypalProvider->capturePaymentOrder($token);
+            $sessionID = $response['id'];
         }
 
         if($offer){ 
