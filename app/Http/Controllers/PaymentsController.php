@@ -416,6 +416,8 @@ class PaymentsController extends Controller
             $orderInfo = $paypalProvider->showOrderDetails($token);
             $response = $paypalProvider->capturePaymentOrder($token);
 
+            Log::info(json_encode($orderInfo));
+            Log::info(json_encode($response));
             // dd($response);
 
             $sessionID = $response['id'];
