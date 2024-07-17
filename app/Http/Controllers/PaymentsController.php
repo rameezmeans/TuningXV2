@@ -449,6 +449,9 @@ class PaymentsController extends Controller
                 $sessionID = $request->get('t');
                 $transaction = VivaWallet::retrieveTransaction($request->get('t'));
 
+                Log::info(json_encode($transaction));
+                Log::info(json_encode($sessionID));
+
                 $merchantTrns = json_decode($transaction['merchantTrns']);
 
                 if(isset($merchantTrns->package_id)) {
