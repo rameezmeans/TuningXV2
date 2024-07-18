@@ -449,6 +449,9 @@ class PaymentsController extends Controller
                 $sessionID = $request->get('t');
                 $transaction = VivaWallet::retrieveTransaction($request->get('t'));
 
+                Log::info(json_encode($transaction));
+                Log::info(json_encode($sessionID));
+
                 $merchantTrns = json_decode($transaction['merchantTrns']);
 
                 if(isset($merchantTrns->package_id)) {
@@ -548,20 +551,21 @@ class PaymentsController extends Controller
 
         if($account->elorus){
 
-                    $clientID = null;
+            $clientID = null;
 
-                    if($user->elorus_id){
-                        $clientID = $user->elorus_id;
-                    }
-                    else{
-                        $clientID = $this->elorusMainObj->createElorusCustomer($user);
-                    }
-                    
-                    if(country_to_continent($user->country) == 'Europe'){
+            if($user->elorus_id == null){
+                
+                $clientID = $this->elorusMainObj->createElorusCustomer($user);
+            }
+            else{
+                $clientID = $user->elorus_id;
+            }
+            
+            if(country_to_continent($user->country) == 'Europe'){
 
-                        $this->elorusMainObj->createElorusInvoice($invoice, $clientID, $user, $package);
+                $this->elorusMainObj->createElorusInvoice($invoice, $clientID, $user, $package);
 
-                    }
+            }
         }
 
         \Cart::remove(101);
