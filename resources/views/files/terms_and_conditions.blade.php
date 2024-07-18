@@ -22,7 +22,7 @@
         <div class="row bt">
           
           <div class="col-xl-12 col-lg-12 col-md-12 m-t-40" style="background: white;">
-            {!!ECUApp\SharedCode\Models\Text::where('slug', 'terms-and-conditions')->first()->text!!}
+            {!!ECUApp\SharedCode\Models\Text::where('slug', 'terms-and-conditions')->where('front_end_id', 2)->first()->text!!}
           </div>
           
           
