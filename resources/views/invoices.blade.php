@@ -34,16 +34,20 @@
                     <td>{{$invoice->price_payed}}€</td>
                     <td><span class="label-success">Paid</span></td>
                     <td>
-                        @if(!$invoice->elorus_permalink)
-                        <a href="{{ route('pdfview',['id'=>$invoice->id]) }}" target="_blank" data-position="bottom" data-tooltip="Download">
-                        <i class="fa fa-download"></i>
-                        <strong> Download</strong>
-                        </a>
+                        @if($invocie->elorus_failure == 1)
+                          <p class="text text-danger">Not Available</p>
                         @else
-                        <a href="{{ $invoice->elorus_permalink }}" target="_blank" data-position="bottom" data-tooltip="Download">
-                          <i class="fa fa-download"></i>
-                          <strong> Download</strong>
+                        @if(!$invoice->elorus_permalink)
+                          <a href="{{ route('pdfview',['id'=>$invoice->id]) }}" target="_blank" data-position="bottom" data-tooltip="Download">
+                            <i class="fa fa-download"></i>
+                            <strong> Download</strong>
                           </a>
+                        @else
+                          <a href="{{ $invoice->elorus_permalink }}" target="_blank" data-position="bottom" data-tooltip="Download">
+                            <i class="fa fa-download"></i>
+                            <strong> Download</strong>
+                          </a>
+                        @endif
                         @endif
                     </td>
 
