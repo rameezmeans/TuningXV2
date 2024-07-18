@@ -34,7 +34,7 @@
                     <td>{{$invoice->price_payed}}€</td>
                     <td><span class="label-success">Paid</span></td>
                     <td>
-                        @if($invocie->elorus_failure == 1)
+                        @if($invoice->elorus_failure == 1)
                           <p class="text text-danger">Not Available</p>
                         @else
                         @if(!$invoice->elorus_permalink)
