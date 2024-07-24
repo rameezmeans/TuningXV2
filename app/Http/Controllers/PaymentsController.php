@@ -401,26 +401,57 @@ class PaymentsController extends Controller
         }
         else if($type == 'paypal'){
 
-            $configArr = config('paypal');
+            $arr = [];
 
-            $configArr['live']['client_id'] = $user->paypal_payment_account()->key;
-            $configArr['live']['client_secret'] = $user->paypal_payment_account()->secret;
+            $arr['PayerID'] = $request->input('PayerID');
+            $arr['paymentId'] = $request->input('paymentId');
+            
+            $sessionID = $arr;
 
-            // $sessionID = $request->get('PayerID');
-            PayPal::setProvider();
-            $paypalProvider = PayPal::getProvider();
-            $paypalProvider->setApiCredentials($configArr);
-            $paypalProvider->setAccessToken($paypalProvider->getAccessToken());   
-            $token = $request->get('token');
+            // $this->gateway->setClientId($user->paypal_payment_account()->key);
+            // $this->gateway->setSecret($user->paypal_payment_account()->secret);
+            // // $this->gateway->setTestMode(false);
+            // $this->gateway->setTestMode(true);
 
-            $orderInfo = $paypalProvider->showOrderDetails($token);
-            $response = $paypalProvider->capturePaymentOrder($token);
+            // if ($request->input('paymentId') && $request->input('PayerID')) {
+            //     $transaction = $this->gateway->completePurchase(array(
+            //         'payer_id' => $request->input('PayerID'),
+            //         'transactionReference' => $request->input('paymentId')
+            //     ));
+    
+            //     $response = $transaction->send();
 
-            Log::info(json_encode($orderInfo));
-            Log::info(json_encode($response));
+            //     if ($response->isSuccessful()) {
+    
+            //         $arr = $response->getData();
+
+            //         Log::info(json_encode($arr));
+
+            //         $sessionID = $arr['id'];
+
+            //     }
+
+            // }
+
+            // $configArr = config('paypal');
+
+            // $configArr['live']['client_id'] = $user->paypal_payment_account()->key;
+            // $configArr['live']['client_secret'] = $user->paypal_payment_account()->secret;
+
+            // // $sessionID = $request->get('PayerID');
+            // PayPal::setProvider();
+            // $paypalProvider = PayPal::getProvider();
+            // $paypalProvider->setApiCredentials($configArr);
+            // $paypalProvider->setAccessToken($paypalProvider->getAccessToken());   
+            // $token = $request->get('token');
+
+            // $orderInfo = $paypalProvider->showOrderDetails($token);
+            // $response = $paypalProvider->capturePaymentOrder($token);
+
+            // Log::info(json_encode($orderInfo));
+            // Log::info(json_encode($response));
+
             // dd($response);
-
-            $sessionID = $response['id'];
             
         }
 
@@ -507,19 +538,22 @@ class PaymentsController extends Controller
             }
             else{
 
-                if($request->packageID == 0){
+                if($offer == false){ 
 
-                    $credits = $request->credits;
-                    $invoice = $this->paymenttMainObj->addCredits($user, $sessionID, $credits, $type);
-                }
-                else{
+                    if($request->packageID == 0){
 
-                    $package = true;
-                    $packageID = $request->packageID;
-                    $package = Package::findOrFail($packageID);
-                    $credits = $package->credits;
-                    $invoice = $this->paymenttMainObj->addCreditsPackage($user, $sessionID, $package, $type);
-                    
+                        $credits = $request->credits;
+                        $invoice = $this->paymenttMainObj->addCredits($user, $sessionID, $credits, $type);
+                    }
+                    else{
+
+                        $package = true;
+                        $packageID = $request->packageID;
+                        $package = Package::findOrFail($packageID);
+                        $credits = $package->credits;
+                        $invoice = $this->paymenttMainObj->addCreditsPackage($user, $sessionID, $package, $type);
+                        
+                    }
                 }
             }
         }
@@ -580,7 +614,6 @@ class PaymentsController extends Controller
 
         return redirect()->route('shop-product')->with('success', 'Credits are added!');
         
-
     }
 
     public function buyPackage(Request $request){
