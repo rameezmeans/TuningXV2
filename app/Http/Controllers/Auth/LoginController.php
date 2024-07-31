@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use ECUApp\SharedCode\Models\NewsFeed;
+use Exception;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -75,19 +76,26 @@ class LoginController extends Controller
             return $this->sendLockoutResponse($request);
         }
 
-        if ($this->attemptLogin($request)) {
-            //check user is admin or not  
-            
-            if (Auth::user()->front_end_id == 2 && Auth::user()->subdealer_group_id == NULL && Auth::user()->is_admin() == false && Auth::user()->is_engineer() == false) {
-                return $this->sendLoginResponse($request);
+        try{
+
+            if ($this->attemptLogin($request)) {
+                //check user is admin or not  
+                
+                if (Auth::user()->front_end_id == 2 && Auth::user()->subdealer_group_id == NULL && Auth::user()->is_admin() == false && Auth::user()->is_engineer() == false) {
+                    return $this->sendLoginResponse($request);
+                }
+                else if (Auth::user()->is_admin() == true) {
+                    return $this->sendLoginResponse($request);
+                }
+                else {
+                    $this->guard()->logout();
+                    // return $this->notAdmin($request);
+                }
             }
-            else if (Auth::user()->is_admin() == true) {
-                return $this->sendLoginResponse($request);
-            }
-            else {
-                $this->guard()->logout();
-                // return $this->notAdmin($request);
-            }
+
+        }
+        catch(Exception $e){
+
         }
 
         // If the login attempt was unsuccessful we will increment the number of attempts
