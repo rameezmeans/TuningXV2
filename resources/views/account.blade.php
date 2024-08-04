@@ -1181,7 +1181,7 @@ select {
             placeholder: "Select Tools",
             allowHtml: true,
             allowClear: true,
-            tags: true // 
+            tags: false  
         });
     });
 
