@@ -477,8 +477,7 @@ body {
 			placeholder : "{{__('Select Tools')}}",
 			// allowHtml: true,
 			allowClear: true,
-			tags: false // создает новые опции на лету
-            
+			tags: false
 		});
 
         $(document).on('change', '#status',function() {
