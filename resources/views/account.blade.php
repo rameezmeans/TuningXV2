@@ -1182,6 +1182,7 @@ select {
             allowHtml: true,
             allowClear: true,
             tags: false  
+            
         });
     });
 
