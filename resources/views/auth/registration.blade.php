@@ -478,6 +478,7 @@ body {
 			// allowHtml: true,
 			allowClear: true,
 			tags: false // создает новые опции на лету
+            
 		});
 
         $(document).on('change', '#status',function() {
