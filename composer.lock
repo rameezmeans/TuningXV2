@@ -905,22 +905,22 @@
         },
         {
             "name": "darryldecode/cart",
-            "version": "4.2.4",
+            "version": "4.2.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/darryldecode/laravelshoppingcart.git",
-                "reference": "25e347f89aecb20e769e228f10e62fa3d770e75d"
+                "reference": "b27ddf65cc6da8954e1690c909522d4824d95fee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/darryldecode/laravelshoppingcart/zipball/25e347f89aecb20e769e228f10e62fa3d770e75d",
-                "reference": "25e347f89aecb20e769e228f10e62fa3d770e75d",
+                "url": "https://api.github.com/repos/darryldecode/laravelshoppingcart/zipball/b27ddf65cc6da8954e1690c909522d4824d95fee",
+                "reference": "b27ddf65cc6da8954e1690c909522d4824d95fee",
                 "shasum": ""
             },
             "require": {
-                "illuminate/support": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*|5.7.*|5.8.*|^6.0|^7.0|^8.0|^9.0|^10.0",
-                "illuminate/translation": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*|5.7.*|5.8.*|^6.0|^7.0|^8.0|^9.0|^10.0",
-                "illuminate/validation": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*|5.7.*|5.8.*|^6.0|^7.0|^8.0|^9.0|^10.0",
+                "illuminate/support": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*|5.7.*|5.8.*|^6.0|^7.0|^8.0|^9.0|^10.0|^11.0",
+                "illuminate/translation": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*|5.7.*|5.8.*|^6.0|^7.0|^8.0|^9.0|^10.0|^11.0",
+                "illuminate/validation": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*|5.7.*|5.8.*|^6.0|^7.0|^8.0|^9.0|^10.0|^11.0",
                 "php": ">=7.3"
             },
             "require-dev": {
@@ -962,9 +962,9 @@
             ],
             "support": {
                 "issues": "https://github.com/darryldecode/laravelshoppingcart/issues",
-                "source": "https://github.com/darryldecode/laravelshoppingcart/tree/4.2.4"
+                "source": "https://github.com/darryldecode/laravelshoppingcart/tree/4.2.5"
             },
-            "time": "2023-09-12T10:14:57+00:00"
+            "time": "2024-08-12T13:23:57+00:00"
         },
         {
             "name": "dflydev/dot-access-data",
@@ -2663,16 +2663,16 @@
         },
         {
             "name": "league/commonmark",
-            "version": "2.5.1",
+            "version": "2.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/commonmark.git",
-                "reference": "ac815920de0eff6de947eac0a6a94e5ed0fb147c"
+                "reference": "df09d5b6a4188f8f3c3ab2e43a109076a5eeb767"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/ac815920de0eff6de947eac0a6a94e5ed0fb147c",
-                "reference": "ac815920de0eff6de947eac0a6a94e5ed0fb147c",
+                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/df09d5b6a4188f8f3c3ab2e43a109076a5eeb767",
+                "reference": "df09d5b6a4188f8f3c3ab2e43a109076a5eeb767",
                 "shasum": ""
             },
             "require": {
@@ -2765,7 +2765,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-07-24T12:52:09+00:00"
+            "time": "2024-08-14T10:56:57+00:00"
         },
         {
             "name": "league/config",
@@ -5491,12 +5491,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:rameezmeans/ecutech-shared-code.git",
-                "reference": "21fd65efb795f09f9df01772251a8ec16e7251dc"
+                "reference": "b744bc5b6355d7bdfd4e2678d559c71ca61664a4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rameezmeans/ecutech-shared-code/zipball/21fd65efb795f09f9df01772251a8ec16e7251dc",
-                "reference": "21fd65efb795f09f9df01772251a8ec16e7251dc",
+                "url": "https://api.github.com/repos/rameezmeans/ecutech-shared-code/zipball/b744bc5b6355d7bdfd4e2678d559c71ca61664a4",
+                "reference": "b744bc5b6355d7bdfd4e2678d559c71ca61664a4",
                 "shasum": ""
             },
             "default-branch": true,
@@ -5520,7 +5520,7 @@
                 "source": "https://github.com/rameezmeans/ecutech-shared-code/tree/main",
                 "issues": "https://github.com/rameezmeans/ecutech-shared-code/issues"
             },
-            "time": "2024-08-08T05:27:29+00:00"
+            "time": "2024-08-13T16:15:17+00:00"
         },
         {
             "name": "ramsey/collection",
