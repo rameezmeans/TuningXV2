@@ -563,6 +563,9 @@ class PaymentsController extends Controller
         }
 
         if($user->zohobooks_id){
+            if($invoice == NULL){
+                return redirect()->route('cart')->with('success', 'Credits not added.');
+            }
             $this->zohoMainObj->createZohobooksInvoice($user, $invoice, $package, $type, $packageID);
         }
 
