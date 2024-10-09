@@ -608,7 +608,7 @@ class FileController extends Controller
             }
             else{
                 $encodedFileNameToBe = $fileName.'_encoded_api';
-                $processedFile = ProcessedFile::where('name', $encodedFileNameToBe)->first();
+                $processedFile = ProcessedFile::where('name', $encodedFileNameToBe)->where('type', 'encoded')->first();
 
                 if($processedFile){
 
@@ -619,12 +619,19 @@ class FileController extends Controller
                     $finalFileName = $processedFile->name;
                 // }
 
-            }else{
-                $finalFileName = $fileName;
-            }
-
                 $file_path = public_path($file->file_path).$finalFileName;
                 return response()->download($file_path);
+
+                }
+                else{
+                    abort(505);
+                }
+
+                // }else{
+                //     $finalFileName = $fileName;
+                // }
+
+                
 
             }
         }
@@ -639,19 +646,25 @@ class FileController extends Controller
         return response()->download($file_path);
     }
 
-        }
+    
+    }
 
-
-        else if($file->tool_type == 'slave' && $file->tool_id == $flexLabel->id){
-        
+    else if($file->tool_type == 'slave' && $file->tool_id == $flexLabel->id){
+            
             $magicFile = MagicEncryptedFile::where('file_id', $file->id)
             ->where('name', $fileName.'_magic_encrypted.mmf')
             ->where('downloadable', 1)
             ->first();
+
+            if($magicFile){
     
-            $file_path = public_path($file->file_path).$magicFile->name;
-            return response()->download($file_path);
-    
+                $file_path = public_path($file->file_path).$magicFile->name;
+                return response()->download($file_path);
+            }
+            else{
+                $file_path = public_path($file->file_path).$fileName; // quick fix. need to work a bit more.
+                return response()->download($file_path);
+            }
         }
 
         else{
