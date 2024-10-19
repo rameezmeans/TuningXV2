@@ -8,7 +8,7 @@
 	@if(!Auth::user()->is_admin())
     @php 
       $feed = Illuminate\Support\Facades\Session::get('feed');  
-	  $OnlineStatus = ECUApp\SharedCode\Models\IntegerMeta::where('key', 'ecutech_online_status')->first()->value;
+	  $OnlineStatus = ECUApp\SharedCode\Models\IntegerMeta::where('key', 'tuningx_online_status')->first()->value;
     @endphp
 	@if($feed)
 		<div class="box @if($feed->type == 'danger') box-danger @else box-success @endif" style="height: 110px !important;">
