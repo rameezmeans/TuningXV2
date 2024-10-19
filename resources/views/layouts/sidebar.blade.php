@@ -8,13 +8,24 @@
 	@if(!Auth::user()->is_admin())
     @php 
       $feed = Illuminate\Support\Facades\Session::get('feed');  
+	  $OnlineStatus = ECUApp\SharedCode\Models\IntegerMeta::where('key', 'ecutech_online_status')->first()->value;
     @endphp
 	@if($feed)
-		<div class="box @if($feed->type == 'danger') box-danger @else box-success @endif">
+		<div class="box @if($feed->type == 'danger') box-danger @else box-success @endif" style="height: 110px !important;">
+		<p style="font-size: 10px;">Mon-Fri: ({{ date('h:i A', strtotime($workHours[0]->start))}} - {{ date('h:i A', strtotime($workHours[0]->end)) }})</p>
+		<p style="font-size: 10px;">Sat: ({{ date('h:i A', strtotime($workHours[1]->start))}} - {{ date('h:i A', strtotime($workHours[1]->end)) }}) Sunday: (Closed)</p>
 		<span>{{__('File Service Status')}}:</span>
 		<p style="margin-top: 5px;"><span class="dot @if($feed->type == 'danger') dot-danger @else dot-success @endif""></span> @if($feed->type == 'danger') Offline @else Online @endif - <span id="MyClockDisplay"></span></p>
 		</div>
 	@endif
+
+	<div class="box @if($OnlineStatus == 0) box-danger @else box-success @endif" style="height: 80px !important;">
+		<p style="font-size: 10px;">24/7</p>
+		
+		<span>{{__('Online Search Status')}}:</span>
+		<p>@if($OnlineStatus == 0) {{'Not Active'}} @else {{'Active'}} @endif</p>
+		
+	</div>
 	
 	<div class="sidebar-section">
 		<ul class="nav sidebar">
