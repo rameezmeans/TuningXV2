@@ -106,6 +106,18 @@ class LoginController extends Controller
         return $this->sendFailedLoginResponse($request);
     }
 
+    protected function attemptLogin(Request $request)
+    {
+        return $this->guard()->attempt(
+            $this->credentials($request), $request->boolean('remember')
+        );
+    }
+
+    protected function credentials(Request $request)
+    {
+        return $request->only($this->username(), 'password')+['front_end_id' => 2];
+    }
+
     protected function notAdmin(Request $request){
         throw ValidationException::withMessages([
           $this->username() => ['You can not login here.'],
