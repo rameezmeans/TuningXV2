@@ -306,6 +306,12 @@ class FileController extends Controller
         $file->support_status = "open";
         $file->save();
 
+        if($file->original_file_id != NULL){
+            $ofile = File::findOrFail($file->original_file_id);
+            $ofile->support_status = "open";
+            $ofile->save();
+        }
+
         $engPermissions = array(
             0 => 'msg_cus_eng_email',
             1 => 'msg_cus_eng_sms',
