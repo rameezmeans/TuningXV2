@@ -71,12 +71,12 @@ if(!function_exists('get_logo_for_stages_and_options')){
 
         foreach($stages as $stage){
             if($stage['name'] == $str)
-                return 'https://devback.ecutech.gr/icons/'.$stage['icon'];
+                return 'https://backend.ecutech.gr/icons/'.$stage['icon'];
         }
 
         foreach($options as $option){
             if($option['name'] == $str)
-                return 'https://devback.ecutech.gr/icons/'.$option['icon'];
+                return 'https://backend.ecutech.gr/icons/'.$option['icon'];
         }
         
     }
