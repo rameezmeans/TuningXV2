@@ -591,7 +591,7 @@ class FileController extends Controller
         
         if($file->tool_type == 'slave' && $file->tool_id == $kess3Label->id){
 
-            if($file->original_file_id == NULL){
+            // if($file->original_file_id == NULL){
 
             $engFile = RequestFile::where('request_file', $fileName)->where('file_id', $file->id)->first();
 
@@ -645,12 +645,12 @@ class FileController extends Controller
             $file_path = public_path($file->file_path).$fileName;
             return response()->download($file_path);
         }
-    }
+    // }
 
-    else{
-        $file_path = public_path($file->file_path).$fileName;
-        return response()->download($file_path);
-    }
+    // else{
+    //     $file_path = public_path($file->file_path).$fileName;
+    //     return response()->download($file_path);
+    // }
 
     
     }
