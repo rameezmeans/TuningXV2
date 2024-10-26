@@ -2126,7 +2126,7 @@ div.file-type-buttons label > input + img {
                       </a>
                     </li>
                     @endif
-                    <li class="active"><a style="border: none;" data-toggle="tab" href="#log-{{$row->id}}"><button class="btn btn-white"><i class="fa fa-file" style="transform: rotate(-90deg)"></i> Add Log</button></a></li>
+                    <li><a style="border: none;" data-toggle="tab" href="#log-{{$row->id}}"><button class="btn btn-white"><i class="fa fa-file" style="transform: rotate(-90deg)"></i> Add Log</button></a></li>
                     <li><a style="border: none;" data-toggle="tab" href="#star-{{$row->id}}"><button class="btn btn-white"><i class="fa fa-star"></i> Add a Rating</button></a></li>
                     
                   </ul>
@@ -2165,7 +2165,7 @@ div.file-type-buttons label > input + img {
                     </div>
                     @endif
 
-                    <div id="log-{{$row->id}}" class="tab-pane fade active in">
+                    <div id="log-{{$row->id}}" class="tab-pane fade in">
 
                       <div class="row">
                         <div class="col-xl-12 col-lg-12 col-md-12">
