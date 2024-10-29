@@ -122,7 +122,7 @@ body {
                                 @enderror
                             </div>
 
-                            <div class="form-group">
+                            {{-- <div class="form-group">
                                 <label for="exampleInputPassword1">EVC Customer ID</label>
                                     <input type="text" id="exampleEvc1" name="evc_customer_id" class="form-control @error('evc_customer_id') is-invalid @enderror" placeholder="{{__('EVC customer ID')}}">
                                 @error('evc_customer_id')
@@ -130,7 +130,7 @@ body {
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                            </div>
+                            </div> --}}
 
                             <div class="form-group">
                                 <label for="exampleInputCountry1">Country *</label>
