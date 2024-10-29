@@ -82,47 +82,76 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {   
 
-        if($data['evc_customer_id']){
-            return Validator::make($data, [
-                'name' => ['required', 'string', 'max:255'],
-                'phone' => ['required', 'string', 'max:255'],
-                'language' => ['required', 'string', 'max:255'],
-                'address' => ['required', 'string', 'max:255'],
-                'zip' => ['required', 'string', 'max:255'],
-                'city' => ['required', 'string', 'max:255'],
-                'country' => ['required', 'string', 'max:255'],
-                'status' => ['required', 'string', 'max:255'],
-                'company_name' => ['max:255'],
-                'company_id' => ['max:255'],
-                'slave_tools_flag' => ['string', 'max:255'],
-                'master_tools' => [],
-                'slave_tools' => [],
-                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                'evc_customer_id' => ['required','unique:users', 'string'],
-                'password' => ['required', 'string', 'min:8', 'confirmed'],
-                'g-recaptcha-response' => ['required', new ReCaptcha]
-            ]);
+        $unique = User::where('email', $data['email'])
+        ->where('front_end_id', 2)->first();
+
+        // if($data['evc_customer_id']){
+        //     return Validator::make($data, [
+        //         'name' => ['required', 'string', 'max:255'],
+        //         'phone' => ['required', 'string', 'max:255'],
+        //         'language' => ['required', 'string', 'max:255'],
+        //         'address' => ['required', 'string', 'max:255'],
+        //         'zip' => ['required', 'string', 'max:255'],
+        //         'city' => ['required', 'string', 'max:255'],
+        //         'country' => ['required', 'string', 'max:255'],
+        //         'status' => ['required', 'string', 'max:255'],
+        //         'company_name' => ['max:255'],
+        //         'company_id' => ['max:255'],
+        //         'slave_tools_flag' => ['string', 'max:255'],
+        //         'master_tools' => [],
+        //         'slave_tools' => [],
+        //         'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+        //         'evc_customer_id' => ['required','unique:users', 'string'],
+        //         'password' => ['required', 'string', 'min:8', 'confirmed'],
+        //         'g-recaptcha-response' => ['required', new ReCaptcha]
+        //     ]);
+        // }
+        // else{
+
+            if($unique != NULL){
+                    
+                    return Validator::make($data, [
+                        'name' => ['required', 'string', 'max:255'],
+                        'phone' => ['required', 'string', 'max:255'],
+                        'language' => ['required', 'string', 'max:255'],
+                        'address' => ['required', 'string', 'max:255'],
+                        'zip' => ['required', 'string', 'max:255'],
+                        'city' => ['required', 'string', 'max:255'],
+                        'country' => ['required', 'string', 'max:255'],
+                        'status' => ['required', 'string', 'max:255'],
+                        'company_name' => ['max:255'],
+                        'company_id' => ['max:255'],
+                        'slave_tools_flag' => ['string', 'max:255'],
+                        'master_tools' => [],
+                        'slave_tools' => [],
+                        'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                        'password' => ['required', 'string', 'min:8', 'confirmed'],
+                        'g-recaptcha-response' => ['required', new ReCaptcha]
+                    ]);
+
+            }
+
+            else{
+                return Validator::make($data, [
+                    'name' => ['required', 'string', 'max:255'],
+                    'phone' => ['required', 'string', 'max:255'],
+                    'language' => ['required', 'string', 'max:255'],
+                    'address' => ['required', 'string', 'max:255'],
+                    'zip' => ['required', 'string', 'max:255'],
+                    'city' => ['required', 'string', 'max:255'],
+                    'country' => ['required', 'string', 'max:255'],
+                    'status' => ['required', 'string', 'max:255'],
+                    'company_name' => ['max:255'],
+                    'company_id' => ['max:255'],
+                    'slave_tools_flag' => ['string', 'max:255'],
+                    'master_tools' => [],
+                    'slave_tools' => [],
+                    'email' => ['required', 'string', 'email', 'max:255'],
+                    'password' => ['required', 'string', 'min:8', 'confirmed'],
+                    'g-recaptcha-response' => ['required', new ReCaptcha]
+                ]);
         }
-        else{
-            return Validator::make($data, [
-                'name' => ['required', 'string', 'max:255'],
-                'phone' => ['required', 'string', 'max:255'],
-                'language' => ['required', 'string', 'max:255'],
-                'address' => ['required', 'string', 'max:255'],
-                'zip' => ['required', 'string', 'max:255'],
-                'city' => ['required', 'string', 'max:255'],
-                'country' => ['required', 'string', 'max:255'],
-                'status' => ['required', 'string', 'max:255'],
-                'company_name' => ['max:255'],
-                'company_id' => ['max:255'],
-                'slave_tools_flag' => ['string', 'max:255'],
-                'master_tools' => [],
-                'slave_tools' => [],
-                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                'password' => ['required', 'string', 'min:8', 'confirmed'],
-                'g-recaptcha-response' => ['required', new ReCaptcha]
-            ]);
-        }
+        // }
     }
 
     /**
