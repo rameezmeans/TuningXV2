@@ -207,7 +207,7 @@ class RegisterController extends Controller
             'company_name' => $data['company_name'],
             'company_id' => $data['company_id'],
             'front_end_id' => 2,
-            'evc_customer_id' => $data['evc_customer_id'],
+            // 'evc_customer_id' => $data['evc_customer_id'],
             'slave_tools_flag' => $slaveToolsFlag,
             'password' => Hash::make($data['password']),
         ]);
@@ -221,21 +221,21 @@ class RegisterController extends Controller
             $userTool->save();
         }
         
-        if($user->evc_customer_id){
+        // if($user->evc_customer_id){
 
-            try{
+        //     try{
 
-                $response = Http::get('https://evc.de/services/api_resellercredits.asp?apiid=j34sbc93hb90&username=161134&password=MAgWVTqhIBitL0wn&verb=addcustomer&customer='.$user->evc_customer_id);
+        //         $response = Http::get('https://evc.de/services/api_resellercredits.asp?apiid=j34sbc93hb90&username=161134&password=MAgWVTqhIBitL0wn&verb=addcustomer&customer='.$user->evc_customer_id);
 
-                $body = $response->body();
+        //         $body = $response->body();
 
-            }
+        //     }
 
-            catch(ConnectionException $e){
+        //     catch(ConnectionException $e){
                 
-            }
+        //     }
 
-        }
+        // }
 
         if(count($masterTools) > 0){
         
