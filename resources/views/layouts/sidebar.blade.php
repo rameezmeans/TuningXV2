@@ -11,19 +11,19 @@
 	  $OnlineStatus = ECUApp\SharedCode\Models\IntegerMeta::where('key', 'tuningx_online_status')->first()->value;
     @endphp
 	@if($feed)
-		<div class="box @if($feed->type == 'danger') box-danger @else box-success @endif" style="height: 110px !important;">
+		<div class="box @if($feed->type == 'danger') box-danger @else box-success @endif" style="height: 130px !important;">
 		<p style="font-size: 10px;">Mon-Fri: ({{ date('h:i A', strtotime($workHours[0]->start))}} - {{ date('h:i A', strtotime($workHours[0]->end)) }})</p>
 		<p style="font-size: 10px;">Sat: ({{ date('h:i A', strtotime($workHours[1]->start))}} - {{ date('h:i A', strtotime($workHours[1]->end)) }}) Sunday: (Closed)</p>
 		<span>{{__('File Service Status')}}:</span>
-		<p style="margin-top: 5px;"><span class="dot @if($feed->type == 'danger') dot-danger @else dot-success @endif""></span> @if($feed->type == 'danger') Offline @else Online @endif - <span id="MyClockDisplay"></span></p>
+		<p style="margin-top: 5px;"><span class="dot @if($feed->type == 'danger') dot-danger @else dot-success @endif"></span> @if($feed->type == 'danger') Offline @else Online @endif - <span id="MyClockDisplay"></span><span style="font-size: 10px;"> (Local Time)</span></p>
 		</div>
 	@endif
 
-	<div class="box @if($OnlineStatus == 0) box-danger @else box-success @endif" style="height: 80px !important;">
-		<p style="font-size: 10px;">24/7</p>
+	<div class="box @if($OnlineStatus == 0) box-danger @else box-success @endif" style="height: 100px !important;">
+		<p style="font-size: 10px;">24h / 7d</p>
 		
-		<span>{{__('Online Search Status')}}:</span>
-		<p>@if($OnlineStatus == 0) {{'Not Active'}} @else {{'Active'}} @endif</p>
+		<p>{{__('Automatic File Service Status')}}:</p>
+		<span class="dot @if($OnlineStatus == 'danger') dot-danger @else dot-success @endif"><span>@if($OnlineStatus == 0) {{'Not Online'}} @else {{'Online'}} @endif</span>
 		
 	</div>
 	
