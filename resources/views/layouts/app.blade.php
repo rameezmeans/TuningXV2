@@ -67,8 +67,8 @@
 <script type="text/javascript">
 
     function showTime(){
-            // var date = new Date(new Date().toLocaleString('en', {timeZone: 'Europe/Athens'}));
-            var date = new Date();
+            var date = new Date(new Date().toLocaleString('en', {timeZone: 'Europe/Athens'}));
+            // var date = new Date();
             var h = date.getHours(); // 0 - 23
             var m = date.getMinutes(); // 0 - 59
             var s = date.getSeconds(); // 0 - 59
