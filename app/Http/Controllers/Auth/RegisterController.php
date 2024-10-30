@@ -162,7 +162,8 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        
+        $alreadyThereUser = User::where('email', $data['email'])->first();
+
         if(isset( $data['slave_tools_flag'])){
             $slaveToolsFlag = $data['slave_tools_flag'];
 
@@ -262,6 +263,14 @@ class RegisterController extends Controller
                
             }
         }
+
+        if($alreadyThereUser != NULL){
+            $user->zohobooks_id = $alreadyThereUser->zohobooks_id;
+            $user->elorus_id = $alreadyThereUser->elorus_id;
+            $user->save();
+        }
+
+        else{
 
         $psr6CachePool = new ArrayCachePool();
 
@@ -363,6 +372,7 @@ class RegisterController extends Controller
         catch(\Exception $e){
 
         }
+    }
 
         $this->authMainObj->VATCheckPolicy($user);
 
