@@ -267,6 +267,7 @@ class RegisterController extends Controller
         if($alreadyThereUser != NULL){
             $user->zohobooks_id = $alreadyThereUser->zohobooks_id;
             $user->elorus_id = $alreadyThereUser->elorus_id;
+            $user->sn = $alreadyThereUser->sn;
             $user->save();
         }
 
