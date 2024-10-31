@@ -799,7 +799,7 @@ div.file-type-buttons label > input + img {
                 <i class="fa fa-download top-box top-box-grey"></i>
               </span>
               <h3 style="display: inline; color: #021F7E; margin-left: 20px;">
-                File Support
+                Pre File Support
               </h3>
               
               <div style="padding-left: 60px;" class="card-dt">
@@ -808,6 +808,7 @@ div.file-type-buttons label > input + img {
                     <div style="margin-bottom: 20px;">
                       @if(!$file->messages_and_logs()->isEmpty())
                       @foreach($file->messages_and_logs() as $engineersMessage)
+                      @if($engineersMessage->request_file_id == NULL)
                         <div class="row bb-light" style="padding: 10px 30px 10px 30px;">
                           <div>
                             @if($engineersMessage->engineer)
@@ -869,6 +870,7 @@ div.file-type-buttons label > input + img {
                           @endif
                           @endif
                         </div>
+                        @endif
                       @endforeach
                         @endif
                       <div class="m-t-10">
@@ -877,12 +879,15 @@ div.file-type-buttons label > input + img {
                             <span style="">
                               <h4 style="margin-bottom: 10px;">Support Message</h4>
                               <strong></strong>
+
+                              @if($file->files->isEmpty())
+
                               <p>
                                 <i style="color: red;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                                 <span style="color: darkgray;">You can send Message to Engineer. Engineers will be notified.</span>
                               </p>
 
-                              @if($file->files->isEmpty())
+                             
 
                               <div class="row">
                                 <div class="col-xl-12 col-lg-12 col-md-12">
@@ -909,6 +914,14 @@ div.file-type-buttons label > input + img {
                               </form>
                                 </div>
                               </div>
+
+                              @else
+                              
+                              <p>
+                                <i style="color: red;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                <span style="color: darkgray;">You cannot send support messages here, Please use the respective area below the file you have received.</span>
+                              </p>
+
                               @endif
 
                             </span>
@@ -1172,9 +1185,9 @@ div.file-type-buttons label > input + img {
 
                 @if(!$row->messages_and_logs()->isEmpty())
                 <div class="bt m-t-20 text-center collapsible-ecu">
-                  <h4 style="margin-top: 20px;"><i class="fa @if(Session::has('success')) fa-chevron-circle-down @else fa-chevron-circle-up @endif" id="arrow-message"></i> Support Messages</h4>
+                  <h4 style="margin-top: 20px;"><i class="fa @if($row->is_latest()) fa-chevron-circle-down @else fa-chevron-circle-up @endif" id="arrow-message"></i> Support Messages</h4>
                 </div>
-                  <div class="bt m-t-20 p-t-10 red-scroll content-ecu" @if(Session::has('success')) style="display: block;" @endif>
+                  <div class="bt m-t-20 p-t-10 red-scroll content-ecu" @if($row->is_latest()) style="display: block;" @endif>
                     @foreach($row->messages_and_logs() as $engineersMessage)
                       <div class="row bb-light" style="padding: 10px 30px 10px 30px;">
                         <div>
@@ -1518,9 +1531,9 @@ div.file-type-buttons label > input + img {
 
               @if(!$row->messages_and_logs()->isEmpty())
                 <div class="bt m-t-20 text-center collapsible-ecu">
-                  <h4 style="margin-top: 20px;"><i class="fa @if(Session::has('success')) fa-chevron-circle-down @else fa-chevron-circle-up @endif" id="arrow-message"></i> Support Messages</h4>
+                  <h4 style="margin-top: 20px;"><i class="fa @if($row->is_latest()) fa-chevron-circle-down @else fa-chevron-circle-up @endif" id="arrow-message"></i> Support Messages</h4>
                 </div>
-                  <div class="bt m-t-20 p-t-10 red-scroll content-ecu" @if(Session::has('success')) style="display: block;" @endif>
+                  <div class="bt m-t-20 p-t-10 red-scroll content-ecu" @if($row->is_latest()) style="display: block;" @endif>
                     @foreach($row->messages_and_logs() as $engineersMessage)
                       <div class="row bb-light" style="padding: 10px 30px 10px 30px;">
                         <div>
@@ -1844,7 +1857,7 @@ div.file-type-buttons label > input + img {
               <i class="fa fa-download top-box top-box-grey"></i>
             </span>
             <h3 style="display: inline; color: #021F7E; margin-left: 20px;">
-              File Support
+              Pre File Support
             </h3>
             
             <div style="padding-left: 60px;" class="card-dt">
@@ -1853,6 +1866,7 @@ div.file-type-buttons label > input + img {
                   <div style="margin-bottom: 20px;">
                     @if(!$file->messages_and_logs()->isEmpty())
                     @foreach($file->messages_and_logs() as $engineersMessage)
+                    @if($engineersMessage->request_file_id == NULL)
                       <div class="row bb-light" style="padding: 10px 30px 10px 30px;">
                         <div>
                           @if($engineersMessage->engineer)
@@ -1915,6 +1929,7 @@ div.file-type-buttons label > input + img {
                         @endif
                         @endif
                       </div>
+                      @endif
                     @endforeach
                       @endif
                     <div class="m-t-10">
@@ -1923,11 +1938,13 @@ div.file-type-buttons label > input + img {
                           <span style="">
                             <h4 style="margin-bottom: 10px;">Support Message</h4>
                             <strong></strong>
+                            @if($file->files->isEmpty())
+
                             <p>
                               <i style="color: red;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                               <span style="color: darkgray;">You can send Message to Engineer. Engineers will be notified.</span>
                             </p>
-                            @if($file->files->isEmpty())
+                            
                             <div class="row">
                               <div class="col-xl-12 col-lg-12 col-md-12">
                             <form method="POST" action="{{ route('file-engineers-notes') }}" enctype="multipart/form-data">
@@ -1953,6 +1970,13 @@ div.file-type-buttons label > input + img {
                             </form>
                               </div>
                             </div>
+                            @else
+                              
+                            <p>
+                              <i style="color: red;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                              <span style="color: darkgray;">You cannot send support messages here, Please use the respective area below the file you have received.</span>
+                            </p>
+                            
                             @endif
 
                           </span>
@@ -2193,9 +2217,9 @@ div.file-type-buttons label > input + img {
                 
                 @if(!$row->messages_and_logs()->isEmpty())
                 <div class="bt m-t-20 text-center collapsible-ecu">
-                  <h4 style="margin-top: 20px;"><i class="fa @if(Session::has('success')) fa-chevron-circle-down @else fa-chevron-circle-up @endif" id="arrow-message"></i> Support Messages</h4>
+                  <h4 style="margin-top: 20px;"><i class="fa @if($row->is_latest()) fa-chevron-circle-down @else fa-chevron-circle-up @endif" id="arrow-message"></i> Support Messages</h4>
                 </div>
-                  <div class="bt m-t-20 p-t-10 red-scroll content-ecu" @if(Session::has('success')) style="display: block;" @endif>
+                  <div class="bt m-t-20 p-t-10 red-scroll content-ecu" @if($row->is_latest()) style="display: block;" @endif>
                     @foreach($row->messages_and_logs() as $engineersMessage)
                       <div class="row bb-light" style="padding: 10px 30px 10px 30px;">
                         <div>
