@@ -1086,7 +1086,7 @@ div.file-type-buttons label > input + img {
                 <i class="fa fa-upload top-box top-box-green"></i>
               </span>
               <h3 style="display: inline; color: #237E02; margin-left: 20px;">
-                File Received
+                File Received {{substr($row->request_file, -2)}}
               </h3>
               <span class="r-file-span" style="float: right; margin-top: 15px;">{{ $row->created_at->format('d/m/Y')}} at
                 
@@ -1428,7 +1428,7 @@ div.file-type-buttons label > input + img {
               <i class="fa fa-upload top-box top-box-green"></i>
             </span>
             <h3 style="display: inline; color: #237E02; margin-left: 20px;">
-              File Received
+              File Received {{substr($row->request_file, -2)}}
             </h3>
             <span class="r-file-span" style="float: right; margin-top: 15px;">{{ $row->created_at->format('d/m/Y')}} at 
               
@@ -2135,7 +2135,7 @@ div.file-type-buttons label > input + img {
                 <i class="fa fa-upload top-box top-box-green"></i>
               </span>
               <h3 style="display: inline; color: #237E02; margin-left: 20px;">
-                File Received
+                File Received {{substr($row->request_file, -2)}}
               </h3>
               <span style="float: right; margin-top: 15px;">{{ $row->created_at->format('d/m/Y')}} at 
                 
