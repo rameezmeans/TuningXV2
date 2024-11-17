@@ -1058,7 +1058,7 @@ div.file-type-buttons label > input + img {
                   <div class="card-header">
                     <div style="margin-bottom: 20px;">
                       <span style="display: inline-grid;">
-                        <h4 style="margin-bottom: 10px;">Reason To Reject:</h4>
+                        <h4 style="margin-bottom: 10px;">Reason To Cancel:</h4>
                         <span class="text-danger">{{$file->reason_to_reject}}</span>
                       </span>
                     
