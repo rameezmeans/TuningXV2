@@ -493,7 +493,7 @@ div.file-type-buttons label > input + img {
                   <div>
                     <h3 class="m-t-5">
                         {{$file->vehicle()->Name}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}
-                        <span class="label @if($file->status == 'rejected') label-red @elseif($file->status == 'completed') label-green @elseif($file->status == 'submitted') label-grey @else label-orange @endif">{{ucfirst($file->status)}}<i class="fa @if( $file->status == 'accepted') fa-check @elseif($file->status == 'rejected') fa-close @endif "></i></span>
+                        <span class="label @if($file->status == 'rejected') label-red @elseif($file->status == 'completed') label-green @elseif($file->status == 'submitted') label-grey @else label-orange @endif">@if($file->status == 'rejected') Canceled  @else{{ucfirst($file->status)}}@endif<i class="fa @if( $file->status == 'accepted') fa-check @elseif($file->status == 'rejected') fa-close @endif "></i></span>
                     </h3>
                     <p style="display: block;">{{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</p>
                   </div>
@@ -1047,7 +1047,7 @@ div.file-type-buttons label > input + img {
                 <i class="fa fa-download top-box top-box-red"></i>
               </span>
               <h3 style="display: inline; color: #b01321; margin-left: 20px;">
-                File Rejected
+                File Canceled
               </h3>
 
               <span style="float: right; margin-top: 20px;" class="d-label">
@@ -2103,7 +2103,7 @@ div.file-type-buttons label > input + img {
                 <i class="fa fa-download top-box top-box-red"></i>
               </span>
               <h3 style="display: inline; color: #b01321; margin-left: 20px;">
-                File Rejected
+                File Canceled
               </h3>
 
               <span style="float: right; margin-top: 20px;" class="d-label">
@@ -2114,7 +2114,7 @@ div.file-type-buttons label > input + img {
                   <div class="card-header">
                     <div style="margin-bottom: 20px;">
                       <span style="display: inline-grid;">
-                        <h4 style="margin-bottom: 10px;">Reason To Reject:</h4>
+                        <h4 style="margin-bottom: 10px;">Reason To Cancel:</h4>
                         <span class="text-danger">{{$file->reason_to_reject}}</span>
                       </span>
                     
