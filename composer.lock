@@ -5499,12 +5499,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:rameezmeans/ecutech-shared-code.git",
-                "reference": "6901ff85152ee77f09fe0a74e137b03e2f6d138c"
+                "reference": "e78545c9c276789d6399c8e347203bb4739a432e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rameezmeans/ecutech-shared-code/zipball/6901ff85152ee77f09fe0a74e137b03e2f6d138c",
-                "reference": "6901ff85152ee77f09fe0a74e137b03e2f6d138c",
+                "url": "https://api.github.com/repos/rameezmeans/ecutech-shared-code/zipball/e78545c9c276789d6399c8e347203bb4739a432e",
+                "reference": "e78545c9c276789d6399c8e347203bb4739a432e",
                 "shasum": ""
             },
             "default-branch": true,
@@ -5528,7 +5528,7 @@
                 "source": "https://github.com/rameezmeans/ecutech-shared-code/tree/main",
                 "issues": "https://github.com/rameezmeans/ecutech-shared-code/issues"
             },
-            "time": "2024-11-18T03:55:08+00:00"
+            "time": "2024-11-18T21:38:38+00:00"
         },
         {
             "name": "ramsey/collection",
@@ -5929,16 +5929,16 @@
         },
         {
             "name": "spatie/backtrace",
-            "version": "1.6.2",
+            "version": "1.6.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/backtrace.git",
-                "reference": "1a9a145b044677ae3424693f7b06479fc8c137a9"
+                "reference": "7c18db2bc667ac84e5d7c18e33f16c38ff2d8838"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/backtrace/zipball/1a9a145b044677ae3424693f7b06479fc8c137a9",
-                "reference": "1a9a145b044677ae3424693f7b06479fc8c137a9",
+                "url": "https://api.github.com/repos/spatie/backtrace/zipball/7c18db2bc667ac84e5d7c18e33f16c38ff2d8838",
+                "reference": "7c18db2bc667ac84e5d7c18e33f16c38ff2d8838",
                 "shasum": ""
             },
             "require": {
@@ -5976,7 +5976,7 @@
                 "spatie"
             ],
             "support": {
-                "source": "https://github.com/spatie/backtrace/tree/1.6.2"
+                "source": "https://github.com/spatie/backtrace/tree/1.6.3"
             },
             "funding": [
                 {
@@ -5988,7 +5988,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2024-07-22T08:21:24+00:00"
+            "time": "2024-11-18T14:58:58+00:00"
         },
         {
             "name": "spatie/flare-client-php",
