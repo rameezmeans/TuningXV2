@@ -41,15 +41,17 @@
       @include('layouts.header')
       <div class="container-fluid">
 
-        <div class="alert success">
-          
-          
-          <p>{{\ECUApp\SharedCode\Models\FrontEnd::findOrFail(2)->resellers_text}}</p>
+        @php
+        $frontend = \ECUApp\SharedCode\Models\FrontEnd::findOrFail(2);
+        @endphp
 
-        
-      </div>
+        @if($frontend->resellers_text != NULL)
+          <div class="alert @if($frontend->type == 'info') info @elseif($frontend->type == 'success') success @else danger @endif">
+              <p>{{$frontend->resellers_text}}</p>
+          </div>
+        @endif
 
-          @php 
+          {{-- @php 
             $feed = Illuminate\Support\Facades\Session::get('feed');       
           @endphp
         @if($feed)
@@ -60,7 +62,8 @@
 
           @endif
         </div>
-        @endif
+        @endif --}}
+
         <div class="dashboard-header-block fix-header">
             <h1>Welcome, {{$user->name}}</h1>
         </div>  
