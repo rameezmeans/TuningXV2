@@ -41,6 +41,14 @@
       @include('layouts.header')
       <div class="container-fluid">
 
+        <div class="alert success">
+          
+          
+          <p>{{\ECUApp\SharedCode\Models\FrontEnd::findOrFail(2)->resellers_text}}</p>
+
+        
+      </div>
+
           @php 
             $feed = Illuminate\Support\Facades\Session::get('feed');       
           @endphp
