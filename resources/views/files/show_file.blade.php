@@ -975,9 +975,14 @@ div.file-type-buttons label > input + img {
                     @if($file->stage_offer)
                       @php 
                         
-                        $stage = \ECUApp\SharedCode\Models\Service::FindOrFail( $file->stage_offer->service_id);
+                      $stage = \ECUApp\SharedCode\Models\Service::FindOrFail( $file->stage_offer->service_id);
 
-                          $creditsProposed += $stage->credits;
+                      if($file->tool_type == 'master'){
+                            $creditsProposed += $stage->tuningx_credits;
+                      }
+                      else{
+                            $creditsProposed += $stage->tuningx_slave_credits;
+                      }
 
                       @endphp
                       @if($stage)
@@ -990,12 +995,19 @@ div.file-type-buttons label > input + img {
                     
                     @if(!$file->options_offer->isEmpty())
                       @foreach($file->options_offer as $option)
-                        @php 
-                            $op = \ECUApp\SharedCode\Models\Service::FindOrFail( $option->service_id ); 
+                      @php 
 
-                              $creditsProposed += $op->credits;
-                            
-                        @endphp
+                      $op = \ECUApp\SharedCode\Models\Service::findOrFail($option['service_id']);
+                      $record = $op->optios_stage($stage->id)->first(); 
+
+                      if($file->tool_type == 'master'){
+                        $creditsProposed += $record->master_credits;
+                      }
+                      else{
+                        $creditsProposed += $record->slave_credits;
+                      }
+                      
+                      @endphp
                         @if($op)
                         <span class="show-stage"><img style="width: 20px;" src="{{ get_logo_for_stages_and_options( $op->name ) }}" alt="{{$op->name}}">
                           {{ $op->name }}</span>
@@ -2028,11 +2040,16 @@ div.file-type-buttons label > input + img {
               </div>
               <div class="m-t-10" style="line-height: 2.7;">
                     @if($file->stage_offer)
-                      @php 
+                    @php 
                         
-                        $stage = \ECUApp\SharedCode\Models\Service::FindOrFail( $file->stage_offer->service_id);
-                      
-                          $creditsProposed += $stage->credits;
+                    $stage = \ECUApp\SharedCode\Models\Service::FindOrFail( $file->stage_offer->service_id);
+
+                    if($file->tool_type == 'master'){
+                          $creditsProposed += $stage->tuningx_credits;
+                        }
+                        else{
+                          $creditsProposed += $stage->tuningx_slave_credits;
+                        }
 
                       @endphp
                       @if($stage)
@@ -2046,10 +2063,17 @@ div.file-type-buttons label > input + img {
                     @if(!$file->options_offer->isEmpty())
                       @foreach($file->options_offer as $option)
                         @php 
-                            $op = \ECUApp\SharedCode\Models\Service::FindOrFail( $option->service_id ); 
 
-                            $creditsProposed += $op->credits;
-                            
+                        $op = \ECUApp\SharedCode\Models\Service::findOrFail($option['service_id']);
+                        $record = $op->optios_stage($stage->id)->first(); 
+
+                        if($file->tool_type == 'master'){
+                          $creditsProposed += $record->master_credits;
+                        }
+                        else{
+                          $creditsProposed += $record->slave_credits;
+                        }
+                        
                         @endphp
                         @if($op)
                         <span class="show-stage"><img style="width: 20px;" src="{{ get_logo_for_stages_and_options( $op->name ) }}" alt="{{$op->name}}">
