@@ -37,7 +37,7 @@
               <th>Status</th>
               <th>Created At</th>
               <th>Credits</th>
-              <th>Vin</th>
+              <th>License Plate</th>
               <th>Customer</th>
             </tr>
           </thead>
@@ -53,7 +53,7 @@
                   </td>
                   <td>{{$file->created_at->diffForHumans();}}</td>
                   <td>{{$file->credits}} Credits</td>
-                  <td>@if($file->vin != ''){{$file->vin}} @else No Name @endif</td>
+                  <td>@if($file->vin != ''){{$file->license_plate}} @else No Name @endif</td>
                   <td>@if($file->name != ''){{$file->name}} @else No Name @endif</td>
                 </tr>
             @endforeach
