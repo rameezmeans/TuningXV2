@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use ECUApp\SharedCode\Models\Language;
 use ECUApp\SharedCode\Models\Credit;
+use ECUApp\SharedCode\Models\File;
 use ECUApp\SharedCode\Models\Tool;
 use ECUApp\SharedCode\Models\User;
 use ECUApp\SharedCode\Models\UserTool;
@@ -109,6 +110,15 @@ class AccountController extends Controller
         
         $user->evc_customer_id = $request->evc_customer_id;
         $user->save();
+
+        $files = File::where('user_id', $user->id)->get();
+
+        foreach($files as $file){
+            $file->name = $user->name;
+            $file->phone = $user->phone;
+            $file->email = $user->email;
+            $file->save();
+        }
 
         $data []= ['name' => 'first_name','contents' => $user->name];
         
