@@ -65,6 +65,7 @@ body {
                                     </span>
                                 @enderror
                             </div>
+                            <input name="code" value="1" id="code" type="hidden">
                             <div class="form-group">
                             <label for="exampleInputEmail1">Email *</label>
                                 <input type="text" value="{{old('email')}}" id="exampleInputEmail1" name="email" class="form-control @error('email') is-invalid @enderror" required="required" placeholder="{{__('Email')}}">
@@ -486,6 +487,13 @@ body {
         const input = document.querySelector("#exampleInputPhone1");
             window.intlTelInput(input, {
             loadUtilsOnInit: "https://cdn.jsdelivr.net/npm/intl-tel-input@24.7.0/build/js/utils.js",
+        });
+
+        $('.iti__country-list li').click(function(){
+            console.log('here we are'); 
+            let code = $(this).data('dial-code');
+            console.log(code);
+            $("#code").val(code);
         });
 
         $(".select-dropdown-multi").select2({
