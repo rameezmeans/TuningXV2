@@ -436,7 +436,7 @@ class RegisterController extends Controller
             Session::put('feed', $feed);
         }
 
-        $phone = $this->getCode($data['country']).$data['phone'];
+        $phone = "+".$data['code'].$data['phone'];
 
         $user = User::create([
             'name' => $data['name'],
