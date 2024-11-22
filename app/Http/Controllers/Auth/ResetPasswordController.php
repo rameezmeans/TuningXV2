@@ -34,10 +34,11 @@ class ResetPasswordController extends Controller
 
     protected function resetPassword($user, $password)
     {
-        $this->setUserPassword($user, $password);
 
         $userActual = User::where('email', $user->email)->where('front_end_id', 2)->first();
 
+        $this->setUserPassword($userActual, $password);
+        
         $userActual->setRememberToken(Str::random(60));
 
         $userActual->save();
