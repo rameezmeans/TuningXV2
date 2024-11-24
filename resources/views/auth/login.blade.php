@@ -41,7 +41,7 @@
 							  <label for="exampleInputPassword1">Password</label>
 							  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password">
 							</div>
-							<a href="#" class="float-right m-t-5 f-bold">Forget Password?</a>
+							<a href="{{url('/password/reset')}}" class="float-right m-t-5 f-bold">Forget Password?</a>
 							
 							<button type="submit" class="btn btn-primary w-100 m-t-10">Login</button>
 						  </form>
