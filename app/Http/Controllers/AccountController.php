@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use ECUApp\SharedCode\Models\Language;
 use ECUApp\SharedCode\Models\Credit;
+use ECUApp\SharedCode\Models\EmailTemplate;
 use ECUApp\SharedCode\Models\File;
 use ECUApp\SharedCode\Models\Tool;
 use ECUApp\SharedCode\Models\User;
@@ -70,6 +71,31 @@ class AccountController extends Controller
         $allSlaveTools = Tool::where('type', 'slave')->get();
         
         return view('account', [ 'user' => $user, 'allMasterTools' => $allMasterTools, 'allSlaveTools' => $allSlaveTools, 'languages' => $languages, 'credits' => $credits,'evcCredits' => $evcCredits, 'masterTools' =>  $masterToolsArray,'slaveTools' => $slaveToolsArray ]);
+    }
+
+    public function deleleAccountEmail(Request $request){
+
+        $user = User::findOrFail($request->user_id);
+        $template = EmailTemplate::where('slug', 'delete_email')->where('front_end_id', 2)->first();
+        $html = $template->html;
+        $html = str_replace("#delete_url", route('delete-account', $user->id) ,$html);
+
+        \Mail::to($user->email)->send(new \App\Mail\AllMails([ 'html' => $html, 'subject' => 'E-tuningFiles: Delete Account']));
+
+        return redirect()->route('account')->with('success', 'email sent, successfully!');
+
+    }
+
+    public function deleleAccount($id){
+        
+        $loggedInUser = Auth::user();
+        $user = User::findOrFail($id);
+
+        if($user->id == $loggedInUser){
+            $user->delete();
+        }
+
+        return redirect()->route('register')->with('success', 'account deleted, successfully!');
     }
 
     function editAccount(Request $request){
