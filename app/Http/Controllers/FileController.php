@@ -962,8 +962,7 @@ class FileController extends Controller
 
         $file = TemporaryFile::findOrFail($request->file_id);
         $vehicle = $file->vehicle();
-        $vehicleType = $vehicle->type;
-
+        
         if($vehicle != NULL){
             $vehicleType = $vehicle->type;
         }
