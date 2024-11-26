@@ -75,6 +75,8 @@ Route::post('/change-password', [App\Http\Controllers\AccountController::class, 
 Route::post('/update_tools', [App\Http\Controllers\AccountController::class, 'updateTools'])->name('update-tools');
 Route::post('get_tool_icons', [App\Http\Controllers\AccountController::class, 'getToolsIcons'])->name('get-tool-icons');
 
+
+
 Route::get('pdfview',array('as'=>'pdfview','uses'=>'App\Http\Controllers\InvoicesController@makePDF'));
 
 Route::get('/upload', [App\Http\Controllers\FileController::class, 'step1'])->name('upload');
