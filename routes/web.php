@@ -75,7 +75,8 @@ Route::post('/change-password', [App\Http\Controllers\AccountController::class, 
 Route::post('/update_tools', [App\Http\Controllers\AccountController::class, 'updateTools'])->name('update-tools');
 Route::post('get_tool_icons', [App\Http\Controllers\AccountController::class, 'getToolsIcons'])->name('get-tool-icons');
 
-
+Route::post('delete_account_email', [App\Http\Controllers\AccountController::class, 'deleleAccountEmail'])->name('delete-account-email');
+Route::get('delete_account/{id}', [App\Http\Controllers\AccountController::class, 'deleleAccount'])->name('delete-account');
 
 Route::get('pdfview',array('as'=>'pdfview','uses'=>'App\Http\Controllers\InvoicesController@makePDF'));
 
