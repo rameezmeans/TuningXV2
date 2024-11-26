@@ -80,7 +80,7 @@ class AccountController extends Controller
         $html = $template->html;
         $html = str_replace("#delete_url", route('delete-account', $user->id) ,$html);
 
-        \Mail::to($user->email)->send(new \App\Mail\AllMails([ 'html' => $html, 'subject' => 'E-tuningFiles: Delete Account']));
+        \Mail::to($user->email)->send(new \App\Mail\AllMails([ 'html' => $html, 'subject' => 'TuningX: Delete Account']));
 
         return redirect()->route('account')->with('success', 'email sent, successfully!');
 
