@@ -14,6 +14,8 @@
 
     {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> --}}
     <link href="{{ url('vendor/ecutech-code/css/bootstrap.min.css') }}" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-css/1.4.6/select2-bootstrap.min.css">
 
     <link href="{{ url('vendor/ecutech-code/css/newappv1.css') }}" rel="stylesheet">
 
@@ -48,6 +50,7 @@
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script> --}}
     <script src="{{url('vendor/ecutech-code/js/Chart.js')}}"></script>
 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
     
 
     @yield('pagespecificstyles')    

@@ -6,6 +6,11 @@
     background-color: white !important;
     
 }
+	
+	.label-info {
+    padding: 5px 15px;
+    border-radius: 10px;
+}
 
 .select2-hidden-accessible {
     clip: rect(0 0 0 0) !important;
@@ -1079,34 +1084,31 @@ select {
                       <table class="table table-hover datatable">
                         <thead>
                           <tr>
-                            <th style="width: 5%;">DATE</th>
-                            <th style="width: 5%;">CREDITS</th>
-                            <th style="width: 20%;">NOTES</th>
-                            <th>INVOICE NUM</th>
-                            <th>AMOUNT</th>
+                                <th>DATE</th>
+                                <th>PURCHASE</th>
+                                <th>SPEND</th>
+                                <th>RUNNING TOTAL</th>
+                                <th>NOTE</th>
+                                <th>INVOICE NUM</th>
+                                <th>AMOUNT</th>
                           </tr>
                         </thead>
                         <tbody>
                           @foreach ($credits as $credit)
                               <tr>
                                 <td style="width: 15%;">{{date('Y - m - d', strtotime( $credit->created_at))}}</td>
-                                <td style="width: 15%;"><span @if($credit->credits < 0) class="label-danger" @else class="label-success" @endif> {{$credit->credits}} Credits </span></td>
                                 
-                                @if(!$credit->file_id)
-                                    <td style="width: 40%;">{{$credit->message_to_credit}}</td>
+                                @if($credit->credits > 0)
+                                    <td style="width: 15%;"><span @if($credit->credits < 0) class="label-danger" @else class="label-success" @endif> {{$credit->credits}} Credits </span></td>
+                                    <td></td>
                                 @else
-                                    @php $file = ECUApp\SharedCode\Models\File::where('id', $credit->file_id)->first(); @endphp
-                                    @if($file)
-                                        <td style="width: 40%;">
-                                            <img alt="" class="img-circle-car-history" src="{{ get_image_from_brand($file->brand) }}">
-                                            {{$file->vehicle()->Name}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}
-                                        </td>
-                                    @else
-                                        <td>File Deleted: {{$credit->file_id}}</td>
-                                    @endif
+                                    <td></td>
+                                    <td style="width: 15%;"><span @if($credit->credits < 0) class="label-danger" @else class="label-success" @endif> {{$credit->credits}} Credits </span></td>
                                 @endif
                                 
-                                <td>{{$credit->invoice_id}}</td>
+                                <td><span class="label-info">{{$credit->running_total()}}</span></td>
+                                <td>{{$credit->message_to_credit}}</td>
+                                <td>@if($credit->credits > 0){{$credit->invoice_id}}@endif</td>
                                 
                                 @if(!$credit->file_id)
                                     <td>{{$credit->price_payed}}€</td>

@@ -90,6 +90,7 @@ Route::post('/get_models', [App\Http\Controllers\FileController::class, 'getMode
 Route::post('/get_versions', [App\Http\Controllers\FileController::class, 'getVersions'])->name('get-versions');
 Route::post('/get_engines', [App\Http\Controllers\FileController::class, 'getEngines'])->name('get-engines');
 Route::post('/get_ecus', [App\Http\Controllers\FileController::class, 'getECUs'])->name('get-ecus');
+Route::post('/get_type', [App\Http\Controllers\FileController::class, 'getType'])->name('get-type');
 Route::get('/stages', [App\Http\Controllers\FileController::class, 'step3'])->name('step3');
 Route::post('/post_stages', [App\Http\Controllers\FileController::class, 'postStages'])->name('post-stages');
 Route::post('get_upload_comments', [App\Http\Controllers\FileController::class, 'getUploadComments'])->name('get-upload-comments');

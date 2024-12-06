@@ -11,7 +11,11 @@
         ->whereNull('subdealer_group_id')
         ->where('front_end_id', 2)
         ->get();
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> 2be6a57 (here we are)
 		$feed = NULL;
 
         foreach($feeds as $live){
