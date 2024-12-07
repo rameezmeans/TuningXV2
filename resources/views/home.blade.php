@@ -47,7 +47,7 @@
 
         @if($frontend->resellers_text != NULL)
           <div class="alert @if($frontend->type == 'info') info @elseif($frontend->type == 'success') success @else danger @endif">
-              <p>{{$frontend->resellers_text}}</p>
+              <p>{!!$frontend->resellers_text!!}</p>
           </div>
         @endif
 
