@@ -131,7 +131,9 @@ Route::post('/viva_payment_file', [App\Http\Controllers\PaymentsController::clas
 Route::post('offer_checkout_viva', [App\Http\Controllers\PaymentsController::class, 'offerCheckoutViva'])->name('buy.offer.viva');
 Route::post('/viva_payment', [App\Http\Controllers\PaymentsController::class, 'redirectViva'])->name('checkout.viva');
 
-Route::get('/bosch-ecu', [App\Http\Controllers\HomeController::class, 'bosch'])->name('bosch-ecu');
+Route::get('/bosch_ecu', [App\Http\Controllers\HomeController::class, 'bosch'])->name('bosch-ecu');
+Route::post('/bosch_ecu', [App\Http\Controllers\HomeController::class, 'getBosch'])->name('get-bosch-ecu');
+
 // Route::get('/bosch-ecu', [App\Http\Controllers\AccountController::class, 'boschECU'])->name('bosch-ecu');
 Route::get('/evc_credit_shop', [App\Http\Controllers\EVCPackagesController::class, 'packages'])->name('evc-credits-shop');
 Route::post('buy_evc_package', [App\Http\Controllers\EVCPackagesController::class, 'buyEVCPackage'])->name('buy.evc.package');
@@ -162,7 +164,9 @@ Route::get('/cancel', [App\Http\Controllers\PaymentsController::class, 'cancel']
 Route::post('get_tool_icons', [App\Http\Controllers\AccountController::class, 'getToolsIcons'])->name('get-tool-icons');
 
 Route::get('/price-list', [App\Http\Controllers\PricelistController::class, 'index'])->name('price-list');
+
 Route::get('/dtc_lookup', [App\Http\Controllers\HomeController::class, 'dtcLookup'])->name('dtc-lookup');
+Route::post('/dtc_lookup', [App\Http\Controllers\HomeController::class, 'getDTCDesc'])->name('get-dtc-desc');
 
 Route::get('/create_test_customer/{id}', [App\Http\Controllers\PaymentsController::class, 'createTestElorusCustomer'])->name('create-customer-elorus');
 

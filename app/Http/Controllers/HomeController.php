@@ -25,6 +25,35 @@ class HomeController extends Controller {
         $this->authMainObj = new AuthMainController;
     }
 
+    public function getBosch(Request $request) {
+
+        $manufacturerNumber = $request->manufacturer_number;
+        $record = BoschNumber::where('manufacturer_number', $manufacturerNumber)->first();
+
+        if($record == NULL){
+            $record = "No Record Found";
+
+        }
+
+        return view('bosch', 
+            ['record' => $record]
+        );
+    }
+
+    public function getDTCDesc(Request $request) {
+
+        $dtcCode = $request->dtc_lookup_code;
+        $record = DTCLookup::where('code', $dtcCode)->first();
+
+        if($record == NULL){
+            $record = "No Record Found";
+
+        }
+
+        return view('dtc_lookup', [
+            'record' => $record]);
+    }
+
     public function bosch() {
 
         $user = Auth::user();

@@ -14,26 +14,49 @@
             </div>
         
         <div class="i-content-block price-level">
-          <table class="table table-hover datatable">
-            <thead>
-              <tr>
-                <th width="30%">Code</th>
-                <th>Desc</th>
-              </tr>
-            </thead>
-            <tbody>
-              @foreach ($dtcLookupRecords as $dtc)
-                  <tr class="">
-                    <td>
-                      <strong>{{$dtc->code}}</strong>
-                    </td>
-                    <td>{{$dtc->desc}}</td>
-                  </tr>
-              @endforeach
-            </tbody>
-          </table>
-        </div>
-       </div>
+          <form action="{{route('get-dtc-desc')}}" method="POST">
+            @csrf
+            <input type="text" name="dtc_lookup_code" value="" class="form-control" placeholder="Enter DTC Code">
+            <div>
+              <button class="btn btn-red btn-red-full text-center m-t-10" type="submit">GET DESCRIPTION</button>
+            </div>
+          </form>
+
+        @if(isset($record))
+
+          <div class="row m-t-20">
+            <div class="col-md-6">
+
+              <div class="card">
+
+                @if(is_object($record))
+
+                  <div class="card-header">
+                    <div style="display: inline-flex;">
+                      <h4>Code: {{$record->code}}</h4>
+                    </div>
+                  </div>
+                  <div class="card-content">
+                    Description: {{$record->desc}}
+                  </div>
+
+                @elseif(is_string($record))
+
+                  <div class="card-header">
+                    <div style="display: inline-flex;">
+                      <h4>No Record Found!</h4>
+                    </div>
+                  </div>
+
+                @endif
+
+              </div>
+
+            </div>
+          </div>
+
+        @endif
+
       </div>
     </div>
   </div>
