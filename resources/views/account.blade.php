@@ -958,7 +958,7 @@ select {
                             
                       </div>
 
-                      <div class="row">
+                      {{-- <div class="row">
                         <div class="col-xl-3 col-lg-3 col-md-3 heading-column">
                             <div class="heading-column-box">
                                 <h3>Languages</h3>
@@ -980,7 +980,7 @@ select {
                             </div>
                           </div>
                         </div>
-                      </div>
+                      </div> --}}
                       
                       
                     </div>
