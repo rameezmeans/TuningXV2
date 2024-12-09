@@ -15,9 +15,9 @@
 
           <div class="i-content-block price-level">
             
-            <form action="{{route('get-bosch-ecu')}}" method="POST">
+            <form action="{{route('get-bosch-ecu')}}" method="POST" class="text-center">
               @csrf
-              <input type="text" name="manufacturer_number" value="" class="form-control" placeholder="Enter Bosch manufacturer number">
+              <input type="text" name="manufacturer_number" value="" class="form-control text-center" placeholder="Enter Bosch manufacturer number">
               <div>
                 <button class="btn btn-red btn-red-full text-center m-t-10" type="submit">GET ECU</button>
               </div>
@@ -26,7 +26,7 @@
           @if(isset($record))
   
             <div class="row m-t-20">
-              <div class="col-md-6">
+              <div class="col-md-12 text-center">
   
                 <div class="card">
   
