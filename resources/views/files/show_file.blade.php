@@ -2550,8 +2550,8 @@ div.file-type-buttons label > input + img {
                       </div>
                       <div class="col-xl-6 col-lg-6 col-md-6">
                         <div class="form-group">
-                          <label for="exampleInputName1">Plate</label>
-                          <input type="text" value="{{$file->license_plate}}" class="form-control @error('license_plate') is-invalid @enderror" id="exampleInputName1" aria-describedby="emailHelp" placeholder="Enter Name" name="license_plate">
+                          <label for="exampleInputName1">Plate *</label>
+                          <input type="text" value="{{$file->license_plate}}" class="form-control @error('license_plate') is-invalid @enderror" id="exampleInputName1" aria-describedby="emailHelp" placeholder="Enter Name" name="license_plate" required>
                           @error('license_plate')
                               <span class="invalid-feedback" role="alert">
                                   <strong>{{ $message }}</strong>
