@@ -196,7 +196,7 @@ class PaymentsController extends Controller
 
     public function offerCheckout(Request $request) {
 
-        $file = TemporaryFile::findOrFail($request->file_id);
+        $file = File::findOrFail($request->file_id);
 
         $serviceCredits = $this->filesMainObj->getCredits($file);
 
