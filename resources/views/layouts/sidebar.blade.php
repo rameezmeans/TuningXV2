@@ -20,7 +20,7 @@
 
 	  $OnlineStatus = ECUApp\SharedCode\Models\IntegerMeta::where('key', 'tuningx_online_status')->first()->value;
     @endphp
-	@if($feed)
+	@if(isset($feed))
 		<div class="box @if($feed->type == 'danger') box-danger @else box-success @endif" style="height: 130px !important;">
 		<p style="font-size: 10px;">Mon-Fri: ({{ date('h:i A', strtotime($workHours[0]->start))}} - {{ date('h:i A', strtotime($workHours[0]->end)) }})</p>
 		<p style="font-size: 10px;">Sat: ({{ date('h:i A', strtotime($workHours[1]->start))}} - {{ date('h:i A', strtotime($workHours[1]->end)) }}) Sunday: (Closed)</p>
