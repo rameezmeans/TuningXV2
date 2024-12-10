@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Log;
 
 use Deyjandi\VivaWallet\VivaWallet;
 use Deyjandi\VivaWallet\Payment;
+use ECUApp\SharedCode\Models\File;
 use ECUApp\SharedCode\Models\TemporaryFile;
 use Srmklive\PayPal\Facades\PayPal;
 
@@ -480,11 +481,12 @@ class PaymentsController extends Controller
         }
 
         if($offer){ 
-            $file = TemporaryFile::findOrFail($request->file_id);
 
+            $file = File::findOrFail($request->file_id);
             $serviceCredits = $this->filesMainObj->getCredits($file);
-            $credits = $serviceCredits - Auth::user()->credits->sum('credits');
-            $creditsForFile = $serviceCredits;
+
+            $credits = $request->creditsToBuy;
+            $creditsForFile = $request->creditsForFile;
 
             $invoice = $this->paymenttMainObj->addCredits($user, $sessionID, $credits, $type);
             $file = $this->filesMainObj->acceptOfferFinalise($user, $fileID, $creditsForFile, $this->frontendID);
