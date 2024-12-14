@@ -515,64 +515,64 @@ class RegisterController extends Controller
 
         else{
 
-        $psr6CachePool = new ArrayCachePool();
+        // $psr6CachePool = new ArrayCachePool();
 
-        $oAuthClient = new \Weble\ZohoClient\OAuthClient('1000.4YI5VY0ZVV0RULDS2BEWFU0GGTVYBL', '51c344a63a6a5de0630f64e87ea3676ced55722589');
+        // $oAuthClient = new \Weble\ZohoClient\OAuthClient('1000.4YI5VY0ZVV0RULDS2BEWFU0GGTVYBL', '51c344a63a6a5de0630f64e87ea3676ced55722589');
 
-        $oAuthClient->setRefreshToken('1000.4c53b2c0d581b45ceac3f380cb37dc99.b95732ec540ced24f044dcffee32dfa7');
+        // $oAuthClient->setRefreshToken('1000.4c53b2c0d581b45ceac3f380cb37dc99.b95732ec540ced24f044dcffee32dfa7');
         
-        $oAuthClient->setRegion('eu');
-        $oAuthClient->useCache($psr6CachePool);
+        // $oAuthClient->setRegion('eu');
+        // $oAuthClient->useCache($psr6CachePool);
 
-        // setup the zoho books client
-        $client = new \Webleit\ZohoBooksApi\Client($oAuthClient);
-        $client->setOrganizationId('8745725');
+        // // setup the zoho books client
+        // $client = new \Webleit\ZohoBooksApi\Client($oAuthClient);
+        // $client->setOrganizationId('8745725');
 
-        $zohoBooks = new \Webleit\ZohoBooksApi\ZohoBooks($client);
+        // $zohoBooks = new \Webleit\ZohoBooksApi\ZohoBooks($client);
 
-        try{
+        // try{
 
-            $sarchContact = $zohoBooks->contacts->getList(['contact_name_contains' => $user->name])->toArray();
+        //     $sarchContact = $zohoBooks->contacts->getList(['contact_name_contains' => $user->name])->toArray();
 
-            if(empty($sarchContact)){
+        //     if(empty($sarchContact)){
 
-                $contact = $zohoBooks->contacts->create(
+        //         $contact = $zohoBooks->contacts->create(
         
-                    [
-                        "contact_name" => $user->name,
-                        "contact_email" => $user->email,
-                        "company_name" => $user->company_name,
-                        "contact_type" => "customer",
-                        "customer_sub_type" => "business",
-                        "is_portal_enabled" => false,
-                        "billing_address" => [
-                            "attention" =>  "Mr. ".$user->name,
-                            "address" => $user->address,
-                            "city" => $user->city,
-                            "zip" =>  $user->zip,
-                            "country" =>  $user->country,
-                            "phone" =>  $user->phone,
-                        ],
-                    ]
+        //             [
+        //                 "contact_name" => $user->name,
+        //                 "contact_email" => $user->email,
+        //                 "company_name" => $user->company_name,
+        //                 "contact_type" => "customer",
+        //                 "customer_sub_type" => "business",
+        //                 "is_portal_enabled" => false,
+        //                 "billing_address" => [
+        //                     "attention" =>  "Mr. ".$user->name,
+        //                     "address" => $user->address,
+        //                     "city" => $user->city,
+        //                     "zip" =>  $user->zip,
+        //                     "country" =>  $user->country,
+        //                     "phone" =>  $user->phone,
+        //                 ],
+        //             ]
         
-                );
+        //         );
 
-                $user->zohobooks_id = $contact->contact_id;
-                $user->save();
-            }
-            else{
+        //         $user->zohobooks_id = $contact->contact_id;
+        //         $user->save();
+        //     }
+        //     else{
 
-                $value = reset($sarchContact);
-                $user->zohobooks_id = $value['contact_id'];
-                $user->save();
+        //         $value = reset($sarchContact);
+        //         $user->zohobooks_id = $value['contact_id'];
+        //         $user->save();
 
-            }
+        //     }
 
             
-        }
-        catch(ClientException $e){
-            Log::info($e->getMessage());
-        }
+        // }
+        // catch(ClientException $e){
+        //     Log::info($e->getMessage());
+        // }
         
         try{
         
