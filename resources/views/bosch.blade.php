@@ -32,14 +32,16 @@
   
                   @if(is_object($record))
   
-                    <div class="card-header">
-                      <div style="display: inline-flex;">
-                        <h4>Manufacturer Number: {{$record->manufacturer_number}}</h4>
-                      </div>
+                  <div class="card-header">
+                    <div style="display: inline-flex;">
+                      <h4>
+                        ECU: {{$record->ecu}}
+                      </h4>
                     </div>
-                    <div class="card-content">
-                      ECU: {{$record->ecu}}
-                    </div>
+                  </div>
+                  <div class="card-content">
+                    Manufacturer Number: {{$record->manufacturer_number}}
+                  </div>
   
                   @elseif(is_string($record))
   
