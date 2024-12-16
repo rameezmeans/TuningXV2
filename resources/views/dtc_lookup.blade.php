@@ -33,11 +33,11 @@
 
                   <div class="card-header">
                     <div style="display: inline-flex;">
-                      <h4>Code: {{$record->code}}</h4>
+                      <h4>{{$record->desc}}</h4>
                     </div>
                   </div>
                   <div class="card-content">
-                    Description: {{$record->desc}}
+                    Code: {{$record->code}}
                   </div>
 
                 @elseif(is_string($record))
