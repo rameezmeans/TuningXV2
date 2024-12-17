@@ -13,7 +13,7 @@
   }
 
   .alert.success {background-color: #04AA6D;}
-  .alert.info {background-color: #2196F3;}
+  .alert.info {background-color: transparent;}
   .alert.warning {background-color: #ff9800;}
 
   .closebtn {
