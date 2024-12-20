@@ -670,7 +670,7 @@
       $("#register_form_Register_Popup").click(function() {
             
             Swal.fire({
-              title: {{$cautionText}},
+              title: '{{$cautionText}}',
               showDenyButton: true,
               confirmButtonText: "Next",
               denyButtonText: "Cancel"
