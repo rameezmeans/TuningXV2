@@ -526,11 +526,19 @@
 
                 <div class="row">
                   <div class="col-xl-6 col-lg-6 col-md-6">
-                    @if($feed->type == 'danger')
-                      <button type="button" id="register_form_Register_Popup" class="waves-effect waves-light btn btn-red" disabled>{{__('Next Test')}}</button>
-                    @else
-                      <button type="submit" id="register_form_Register" class="waves-effect waves-light btn btn-red" disabled>{{__('Next')}}</button>
-                    @endif
+                    @if(isset($feed))
+
+                        @if($feed->type == 'danger')
+                          <button type="button" id="register_form_Register_Popup" class="waves-effect waves-light btn btn-red" disabled>{{__('Next Test')}}</button>
+                        @else
+                          <button type="submit" id="register_form_Register" class="waves-effect waves-light btn btn-red" disabled>{{__('Next')}}</button>
+                        @endif
+
+                      @else
+
+                        <button type="submit" id="register_form_Register" class="waves-effect waves-light btn btn-red" disabled>{{__('Next')}}</button>
+
+                      @endif
                   </div>
                 </div>
 
