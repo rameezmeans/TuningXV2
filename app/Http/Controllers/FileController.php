@@ -349,6 +349,12 @@ class FileController extends Controller
         if($request->file('engineers_attachement')){
             $attachment = $request->file('engineers_attachement');
             $fileName = $attachment->getClientOriginalName();
+
+            $fileName = str_replace('/', '', $fileName);
+            $fileName = str_replace('\\', '', $fileName);
+            $fileName = str_replace('#', '', $fileName);
+            $fileName = str_replace(' ', '_', $fileName);
+
             $attachment->move(public_path($file->file_path),$fileName);
             $reply->engineers_attachement = $fileName;
         }
