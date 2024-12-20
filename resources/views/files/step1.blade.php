@@ -178,7 +178,7 @@
           </div>
 
           <div id="posting-file" class="@if($errors->any()) show @else hide @endif">
-            <form method="POST" action="{{ route('step2') }}" enctype="multipart/form-data">
+            <form id="step2" name="step2" method="POST" action="{{ route('step2') }}" enctype="multipart/form-data">
                 <input type="hidden" name="temporary_file_id" id="temporary_file_id" value="{{ old('temporary_file_id') }}">
                 @csrf
 
@@ -639,6 +639,30 @@
     });
 
     $(document).ready(function(event) {
+
+      $("#register_form_Register_Popup").click(function() {
+            
+            Swal.fire({
+              title: {{$cautionText}},
+              showDenyButton: true,
+              confirmButtonText: "Next",
+              denyButtonText: "Cancel"
+            }).then((result) => {
+              
+              if (result.isConfirmed) {
+  
+                document.forms['step2'].submit();
+  
+              } else if (result.isDenied) {
+              
+                window.location.href = "/home";
+  
+              }
+  
+            });
+                
+                
+          });
 		
 		$(".select-dropdown-multi").select2({
 			closeOnSelect : false,
