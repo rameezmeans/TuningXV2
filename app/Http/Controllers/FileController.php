@@ -380,21 +380,24 @@ class FileController extends Controller
             2 => 'msg_cus_eng_whatsapp'
         );
 
-        $uploader = User::findOrFail($file->user_id);
-        $engineer = User::FindOrFail($file->assigned_to);
-        $subject = "TuningX: Client support message!";
-        $this->notificationsMainObj->sendNotification($engineer, $file, $uploader, $this->frontendID, $subject, 'mess-to-eng', 'message_to_engineer', $engPermissions);
+        if($file->assigned_to){
 
-        $adminPermissions = array(
-            0 => 'msg_cus_admin_email',
-            1 => 'msg_cus_admin_sms',
-            2 => 'msg_cus_admin_whatsapp'
-        );
+            $uploader = User::findOrFail($file->user_id);
+            $engineer = User::FindOrFail($file->assigned_to);
+            $subject = "TuningX: Client support message!";
+            $this->notificationsMainObj->sendNotification($engineer, $file, $uploader, $this->frontendID, $subject, 'mess-to-eng', 'message_to_engineer', $engPermissions);
 
-        $uploader = User::findOrFail($file->user_id);
-        $admin = get_admin();
-        $subject = "TuningX: Client support message!";
-        $this->notificationsMainObj->sendNotification($admin, $file, $uploader, $this->frontendID, $subject, 'mess-to-eng', 'message_to_engineer', $adminPermissions);
+            $adminPermissions = array(
+                0 => 'msg_cus_admin_email',
+                1 => 'msg_cus_admin_sms',
+                2 => 'msg_cus_admin_whatsapp'
+            );
+
+            $uploader = User::findOrFail($file->user_id);
+            $admin = get_admin();
+            $subject = "TuningX: Client support message!";
+            $this->notificationsMainObj->sendNotification($admin, $file, $uploader, $this->frontendID, $subject, 'mess-to-eng', 'message_to_engineer', $adminPermissions);
+        }
 
         return redirect()->back()->with('success', 'Engineer note successfully Added!');
     }
