@@ -27,6 +27,8 @@
 		<span>{{__('File Service Status')}}:</span>
 		<p style="margin-top: 5px;"><span class="dot @if($feed->type == 'danger') dot-danger @else dot-success @endif"></span> @if($feed->type == 'danger') Offline @else Online @endif - <span id="MyClockDisplay"></span><span style="font-size: 10px;"> (Local Time)</span></p>
 		</div>
+	@else
+		<span style="display: none;" id="MyClockDisplay"></span>
 	@endif
 
 	<div class="box @if($OnlineStatus == 0) box-danger @else box-success @endif" style="height: 100px !important;">
