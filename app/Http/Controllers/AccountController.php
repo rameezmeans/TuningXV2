@@ -243,22 +243,22 @@ class AccountController extends Controller
             }
         }
 
-        UserTool::where('user_id', $user->id)->where('type', 'slave')->delete();
+        // UserTool::where('user_id', $user->id)->where('type', 'slave')->delete();
 
-        $slaveTools = $request->slave_tools;
+        // $slaveTools = $request->slave_tools;
 
-        if($slaveTools){
+        // if($slaveTools){
 
-            foreach($slaveTools as $sid){
+        //     foreach($slaveTools as $sid){
 
-                $record = new UserTool();
-                $record->type = 'slave';
-                $record->user_id = $user->id;
-                $record->tool_id = $sid;
-                $record->save();
+        //         $record = new UserTool();
+        //         $record->type = 'slave';
+        //         $record->user_id = $user->id;
+        //         $record->tool_id = $sid;
+        //         $record->save();
                 
-            }
-        }
+        //     }
+        // }
         
         return redirect()->route('account',['success' => 'Tools edited, successfully!']);
         
