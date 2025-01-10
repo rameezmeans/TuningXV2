@@ -1022,7 +1022,7 @@ body  {
                     });
             
         // }, 90);
-        }, 600000);
+        }, 900000);
 
         channel.bind("download-button", function(data) {
 
