@@ -1057,23 +1057,20 @@ select {
                                 </div>
                             </div>
     
+                            <button type="submit" class="btn btn-info waves-effect waves-light m-sm">{{__('Save Changes')}}</button>
+    
                             <div class="form-group m-t-20">
 
                             <label class="account-label">Slave Tools</label>
-                            
 
-                                  <select name="slave_tools[]" id="slave_tools" class="select-dropdown-multi form-control" multiple>
-  
-                                      @foreach($allSlaveTools as $stool) 
-                                      <option value="{{ $stool->id }}" @if( in_array($stool->id, $slaveTools)) selected @endif>{{$stool->name}}</option>
-                                      @endforeach
-  
-                                  </select>
-                                
+                                @foreach($slaveTools as $stool) 
+                                    <div style="width: fit-content;" class="label-info">{{ECUApp\SharedCode\Models\Tool::findOrFail($stool)->name}}</div>
+                                @endforeach
+
+                                <p class="text-danger m-t-20">* If you want to add or update Slave tools please contact Company Support.</p>
+
                             </div>
-                    
-    
-                        <button type="submit" class="btn btn-info waves-effect waves-light m-sm">{{__('Save Changes')}}</button>
+                            
                       </form>
                         </div>
                       </div>
