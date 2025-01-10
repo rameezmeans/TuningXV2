@@ -72,13 +72,13 @@
     </ul>
   </div>
 </nav>
-@if(Session::has('success'))
+{{-- @if(Session::has('success'))
   <p class="note-success">{{ Session::get('success') }} <button class="close">x</button></p>
 @endif
 
 @if(Session::has('danger'))
   <p class="note-danger">{{ Session::get('danger') }} <button class="close">x</button></p>
-@endif
+@endif --}}
 
 <script type="text/javascript">
   document.addEventListener('DOMContentLoaded', function () {
