@@ -1064,7 +1064,7 @@ select {
                             <label class="account-label">Slave Tools</label>
 
                                 @foreach($slaveTools as $stool) 
-                                    <div style="width: fit-content;" class="label-info">{{ECUApp\SharedCode\Models\Tool::findOrFail($stool)->name}}</div>
+                                    <div style="width: fit-content;" class="label-info m-t-5">{{ECUApp\SharedCode\Models\Tool::findOrFail($stool)->name}}</div>
                                 @endforeach
 
                                 <p class="text-danger m-t-20">* If you want to add or update Slave tools please contact Company Support.</p>
