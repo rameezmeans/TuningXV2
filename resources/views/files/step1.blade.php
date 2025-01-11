@@ -2,21 +2,11 @@
 @section('pagespecificstyles')
 <style>
 	
-	.select2-search__field {
+  .select2-search__field {
     height: 1.8rem !important;
 }
-
-.select2-container--default .select2-selection--single {
-  height: 50px;
-}
-
-.select2-selection__rendered {
-  height: 50px;
-}
-
-.select2-container--default {
-    width: 100% !important;
-    height: 100px;;
+.select2-container{
+  width: 100% !important;
 }
 
   .stage-box{
@@ -702,6 +692,14 @@
 
     $(document).ready(function(event) {
 
+      $(".select-dropdown-multi").select2({
+			closeOnSelect : false,
+			placeholder : "{{__('Select Modifications')}}",
+			// allowHtml: true,
+			allowClear: true,
+			tags: true // создает новые опции на лету
+		});
+
       $("input[name='is_original']").click(function() {
         if ($(this).val() === 'yes') {
           console.log('original');
@@ -710,18 +708,6 @@
           console.log('not original');
           $('#original_area').removeClass('hide');
         } 
-      });
-
-      $(document).on('change', '#modification', function(e) {
-        
-        if($(this).val() == 'other'){
-          console.log($(this).val());
-          $('#mention_area').removeClass('hide');
-        }
-        else{
-          $('#mention_area').addClass('hide');
-        }
-
       });
 
       $("#register_form_Register_Popup").click(function() {
