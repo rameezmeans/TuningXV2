@@ -445,32 +445,33 @@
                                   <div class="form-group">
                                     <label for="exampleInputCompanyLP1">Modifications</label>
                                     
-                                    <select id="modification" name="modification" class="select-dropdown form-control">
-                                      <option value="" selected disabled>Mention Modification</option>
+                                    <select id="modification" name="modification[]" multiple class="select-dropdown-multi form-control">
+                                      
                                       <option value="stage1">Stage1</option>
                                       <option value="stage2">Stage2</option>
                                       <option value="DPF">DPF</option>
                                       <option value="EGR">EGR</option>
                                       <option value="DTC_OFF">DTC OFF</option>
                                       <option value="other">Other (Please mention)</option>
+
                                     </select>
                                   
                                   </div>
                                 </div>
-  
-                                <div class="col-xl-12 col-lg-12 col-md-12 hide" id="mention_area">
-                                  <div class="form-group">
-                                      <label for="exampleInputCompanyAC1">Mention Modification</label>
-                                      <textarea type="text" id="mention_modification" rows="3" name="mention_modification" class="materialize-textarea form-control @error('mention_modification') is-invalid @enderror" placeholder="{{__('Mention Modification')}} ">{{ old('mention_modification') }}</textarea>
-                                      @error('mention_modification')
-                                      <span class="invalid-feedback" role="alert">
-                                          <strong>{{ $message }}</strong>
-                                      </span>
-                                      @enderror
-                                  </div>
+
+                              <div class="col-xl-12 col-lg-12 col-md-12" id="mention_area">
+                                <div class="form-group">
+                                    <label for="exampleInputCompanyAC1">Mention Modification</label>
+                                    <textarea type="text" id="mention_modification" rows="3" name="mention_modification" class="materialize-textarea form-control @error('mention_modification') is-invalid @enderror" placeholder="{{__('Mention Modification')}} ">{{ old('mention_modification') }}</textarea>
+                                    @error('mention_modification')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
-  
-                                </div>
+                              </div>
+
+                              </div>
 
                             <div class="col-xl-12 col-lg-12 col-md-12">
                                 <div class="form-group">
