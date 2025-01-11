@@ -449,6 +449,39 @@
                                 </div>
                               </div>
 
+                              <div id="original_area" class="hide">
+
+                                <div class="col-xl-12 col-lg-12 col-md-12">
+                                  <div class="form-group">
+                                    <label for="exampleInputCompanyLP1">Modifications</label>
+                                    
+                                    <select id="modification" name="modification" class="select-dropdown form-control">
+                                      <option value="" selected disabled>Mention Modification</option>
+                                      <option value="stage1">Stage1</option>
+                                      <option value="stage2">Stage2</option>
+                                      <option value="DPF">DPF</option>
+                                      <option value="EGR">EGR</option>
+                                      <option value="DTC_OFF">DTC OFF</option>
+                                      <option value="other">Other (Please mention)</option>
+                                    </select>
+                                  
+                                  </div>
+                                </div>
+  
+                                <div class="col-xl-12 col-lg-12 col-md-12 hide" id="mention_area">
+                                  <div class="form-group">
+                                      <label for="exampleInputCompanyAC1">Mention Modification</label>
+                                      <textarea type="text" id="mention_modification" rows="3" name="mention_modification" class="materialize-textarea form-control @error('mention_modification') is-invalid @enderror" placeholder="{{__('Mention Modification')}} ">{{ old('mention_modification') }}</textarea>
+                                      @error('mention_modification')
+                                      <span class="invalid-feedback" role="alert">
+                                          <strong>{{ $message }}</strong>
+                                      </span>
+                                      @enderror
+                                  </div>
+                                </div>
+  
+                                </div>
+
                             <div class="col-xl-12 col-lg-12 col-md-12">
                                 <div class="form-group">
                                     <label for="exampleInputCompanyAC1">Additional Comment</label>
@@ -668,6 +701,28 @@
     });
 
     $(document).ready(function(event) {
+
+      $("input[name='is_original']").click(function() {
+        if ($(this).val() === 'yes') {
+          console.log('original');
+          $('#original_area').addClass('hide');
+        } else if ($(this).val() === 'no') {
+          console.log('not original');
+          $('#original_area').removeClass('hide');
+        } 
+      });
+
+      $(document).on('change', '#modification', function(e) {
+        
+        if($(this).val() == 'other'){
+          console.log($(this).val());
+          $('#mention_area').removeClass('hide');
+        }
+        else{
+          $('#mention_area').addClass('hide');
+        }
+
+      });
 
       $("#register_form_Register_Popup").click(function() {
             
