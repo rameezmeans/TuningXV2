@@ -447,12 +447,9 @@
                                     
                                     <select id="modification" name="modification[]" multiple class="select-dropdown-multi form-control">
                                       
-                                      <option value="stage1">Stage1</option>
-                                      <option value="stage2">Stage2</option>
-                                      <option value="DPF">DPF</option>
-                                      <option value="EGR">EGR</option>
-                                      <option value="DTC_OFF">DTC OFF</option>
-                                      <option value="other">Other (Please mention)</option>
+                                      @foreach($modifications as $modification)
+                                        <option value="{{$modification->label}}">{{$modification->name}}</option>
+                                      @endforeach
 
                                     </select>
                                   
