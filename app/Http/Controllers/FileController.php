@@ -35,6 +35,7 @@ use ECUApp\SharedCode\Models\Vehicle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use ECUApp\SharedCode\Models\MagicEncryptedFile;
+use ECUApp\SharedCode\Models\AutoTunerEncrypted;
 
 use Pusher\Pusher;
 
