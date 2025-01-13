@@ -452,7 +452,7 @@ class RegisterController extends Controller
             'company_id' => $data['company_id'],
             'front_end_id' => 2,
             // 'evc_customer_id' => $data['evc_customer_id'],
-            'slave_tools_flag' => $slaveToolsFlag,
+            // 'slave_tools_flag' => $slaveToolsFlag,
             'password' => Hash::make($data['password']),
         ]);
 
@@ -494,18 +494,18 @@ class RegisterController extends Controller
             }
         }
 
-        if(count($slaveTools) > 0){
+        // if(count($slaveTools) > 0){
         
-            foreach($slaveTools as $sid){
+        //     foreach($slaveTools as $sid){
 
-                $record = new UserTool();
-                $record->type = 'slave';
-                $record->user_id = $user->id;
-                $record->tool_id = $sid;
-                $record->save();
+        //         $record = new UserTool();
+        //         $record->type = 'slave';
+        //         $record->user_id = $user->id;
+        //         $record->tool_id = $sid;
+        //         $record->save();
                
-            }
-        }
+        //     }
+        // }
 
         if($alreadyThereUser != NULL){
             $user->zohobooks_id = $alreadyThereUser->zohobooks_id;
