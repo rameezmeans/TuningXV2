@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use ECUApp\SharedCode\Controllers\AlientechMainController;
+use ECUApp\SharedCode\Controllers\AutotunerMainController;
 use ECUApp\SharedCode\Controllers\FilesMainController;
 use ECUApp\SharedCode\Controllers\NotificationsMainController;
 use ECUApp\SharedCode\Controllers\PaymentsMainController;
@@ -51,6 +52,7 @@ class FileController extends Controller
     private $frontendID;
     private $alientechMainObj;
     private $magicMainObj;
+    private $autoTunerMainObj;
 
     public function __construct(){
 
@@ -62,6 +64,7 @@ class FileController extends Controller
         $this->notificationsMainObj = new NotificationsMainController();
         $this->alientechMainObj = new AlientechMainController();
         $this->magicMainObj = new MagicsportsMainController();
+        $this->autoTunerMainObj = new AutotunerMainController();
     }
 	
 	/**
@@ -654,6 +657,7 @@ class FileController extends Controller
 
         $kess3Label = Tool::where('label', 'Kess_V3')->where('type', 'slave')->first();
         $flexLabel = Tool::where('label', 'Flex')->where('type', 'slave')->first();
+        $autoTunerLabel = Tool::where('label', 'Autotuner')->where('type', 'slave')->first();
 
         $engFile = RequestFile::where('request_file', $fileName)->where('file_id', $file->id)->first();
 
@@ -744,6 +748,20 @@ class FileController extends Controller
                 $file_path = public_path($file->file_path).$fileName; // quick fix. need to work a bit more.
                 return response()->download($file_path);
             }
+        }
+
+        else if($file->tool_type == 'slave' && $file->tool_id == $autoTunerLabel->id){
+            
+            $autotunerFile = AutotunerEncrypted::where('file_id', $file->id)
+            ->where('name', $fileName.'_encrypted.slave')
+            ->first();
+
+            if($autotunerFile){
+    
+                $file_path = public_path($file->file_path).$autotunerFile->name;
+                return response()->download($file_path);
+            }
+
         }
 
         else{
@@ -1079,6 +1097,15 @@ class FileController extends Controller
             
             $path = $this->filesMainObj->getPath($file);
             $this->magicMainObj->magicDecrypt($path , $tempFile->id);
+            
+        }
+
+        $autoTunerLabel = Tool::where('label', 'Autotuner')->where('type', 'slave')->first();
+
+        if($toolType == 'slave' && $tempFile->tool_id == $autoTunerLabel->id){
+            
+            $path = $this->filesMainObj->getPath($file);
+            $this->autoTunerMainObj->autoturnerDecrypt($path , $tempFile->id);
             
         }
 
