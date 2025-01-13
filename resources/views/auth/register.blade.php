@@ -434,8 +434,8 @@ body {
                             </div>
 
                             <div class="form-group">
-                                <input type="checkbox" id="slave_tools_flag" name="slave_tools_flag" value="slave_tools_flag">
-                                <label for="slave_tools_flag"> {{__('I have slave tools.')}}</label><br>
+                                {{-- <input type="checkbox" id="slave_tools_flag" name="slave_tools_flag" value="slave_tools_flag">
+                                <label for="slave_tools_flag"> {{__('I have slave tools.')}}</label><br> --}}
                                 <p style="margin-left:0.6rem;font-size:12px;">{{__('Please select at least one reading tool.')}}</p>
                             </div>
 
@@ -452,7 +452,7 @@ body {
                                 
                             </div>
 
-                            <div class="form-group">
+                            {{-- <div class="form-group">
                                 <label for="exampleInputSlave1">Slave Tools</label>
                                 <div>
                                 <select disabled name="slave_tools[]" id="slave_tools" class="select-dropdown-multi form-control" multiple>
@@ -462,7 +462,7 @@ body {
                                   </select>
                                 </div>
                                 
-                            </div>
+                            </div> --}}
                        
                             {!! htmlFormSnippet() !!}
                         
@@ -517,16 +517,16 @@ body {
             }
         });
 
-        $('#slave_tools_flag').click(function() {
-            if ($(this).is(':checked')) {
-                console.log('checked');
-                $("#slave_tools").removeAttr('disabled');
-            }
-            else {
-                console.log('unchecked'); 
-                $("#slave_tools").attr("disabled", "disabled");
-            }
-        });
+        // $('#slave_tools_flag').click(function() {
+        //     if ($(this).is(':checked')) {
+        //         console.log('checked');
+        //         $("#slave_tools").removeAttr('disabled');
+        //     }
+        //     else {
+        //         console.log('unchecked'); 
+        //         $("#slave_tools").attr("disabled", "disabled");
+        //     }
+        // });
     });
 </script>
 @endsection
