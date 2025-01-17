@@ -456,7 +456,7 @@
                                   </div>
                                 </div>
 
-                              <div class="col-xl-12 col-lg-12 col-md-12" id="mention_area">
+                              {{-- <div class="col-xl-12 col-lg-12 col-md-12" id="mention_area">
                                 <div class="form-group">
                                     <label for="exampleInputCompanyAC1">Mention Modification</label>
                                     <textarea type="text" id="mention_modification" rows="3" name="mention_modification" class="materialize-textarea form-control @error('mention_modification') is-invalid @enderror" placeholder="{{__('Mention Modification')}} ">{{ old('mention_modification') }}</textarea>
@@ -466,7 +466,7 @@
                                     </span>
                                     @enderror
                                 </div>
-                              </div>
+                              </div> --}}
 
                               </div>
 
