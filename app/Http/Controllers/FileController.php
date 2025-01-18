@@ -371,11 +371,13 @@ class FileController extends Controller
         $reply->save();
 
         $file->support_status = "open";
+        $file->timer = Carbon::now();
         $file->save();
 
         if($file->original_file_id != NULL){
             $ofile = File::findOrFail($file->original_file_id);
             $ofile->support_status = "open";
+            $file->timer = Carbon::now();
             $ofile->save();
         }
 
