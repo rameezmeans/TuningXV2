@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Validator;
 
 use Cache\Adapter\PHPArray\ArrayCachePool;
 use ECUApp\SharedCode\Controllers\AuthMainController;
+use ECUApp\SharedCode\Controllers\ZohoMainController;
 use ECUApp\SharedCode\Models\NewsFeed;
 use ECUApp\SharedCode\Models\Tool;
 use ECUApp\SharedCode\Models\User;
@@ -514,6 +515,8 @@ class RegisterController extends Controller
         }
 
         else{
+
+        (new ZohoMainController())->createTestZohoCustomer($user);
 
         // $psr6CachePool = new ArrayCachePool();
 
