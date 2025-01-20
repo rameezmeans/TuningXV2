@@ -516,7 +516,7 @@ class RegisterController extends Controller
 
         else{
 
-        (new ZohoMainController())->createTestZohoCustomer($user);
+        (new ZohoMainController())->createNewZohoCustomer($user);
 
         // $psr6CachePool = new ArrayCachePool();
 
