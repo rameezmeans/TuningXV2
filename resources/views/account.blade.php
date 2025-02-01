@@ -1077,48 +1077,61 @@ select {
                     </div>
 
                     <div id="logs" class="tab-pane fade">
-                      <div class="col-xl-12 col-lg-12 col-md-12 m-t-20" >
-                      <table class="table table-hover datatable">
-                        <thead>
-                          <tr>
-                                <th>DATE</th>
-                                <th>PURCHASE</th>
-                                <th>SPEND</th>
-                                <th>RUNNING TOTAL</th>
-                                <th>NOTE</th>
-                                <th>INVOICE NUM</th>
-                                <th>AMOUNT</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          @foreach ($credits as $credit)
-                              <tr>
-                                <td style="width: 15%;">{{date('Y - m - d', strtotime( $credit->created_at))}}</td>
-                                
-                                @if($credit->credits > 0)
-                                    <td style="width: 15%;"><span @if($credit->credits < 0) class="label-danger" @else class="label-success" @endif> {{$credit->credits}} Credits </span></td>
-                                    <td></td>
-                                @else
-                                    <td></td>
-                                    <td style="width: 15%;"><span @if($credit->credits < 0) class="label-danger" @else class="label-success" @endif> {{$credit->credits}} Credits </span></td>
-                                @endif
-                                
-                                <td><span class="label-info">{{$credit->running_total()}}</span></td>
-                                <td>{{$credit->message_to_credit}}</td>
-                                <td>@if($credit->credits > 0){{$credit->invoice_id}}@endif</td>
-                                
-                                @if(!$credit->file_id)
-                                    <td>{{$credit->price_payed}}€</td>
-                                @else
-                                    <td></td>
-                                @endif
-
-                              </tr>
-                          @endforeach
-                        </tbody>
-                      </table>
+                        <div class="col-xl-12 col-lg-12 col-md-12 m-t-20" >
+                        <table class="table table-hover datatable">
+                          <thead>
+                            <tr>
+                                  <th>DATE</th>
+                                     <th>PURCHASE</th>
+                                  <th>SPEND</th>
+                                  <th>RUNNING TOTAL</th>
+                                  <th>NOTE</th>
+                                  <th>INVOICE NUM</th>
+                                  <th>AMOUNT</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            @foreach ($credits as $credit)
+                                <tr>
+                                  <td style="width: 15%;">{{date('Y - m - d', strtotime( $credit->created_at))}}</td>
+                                  
+                                  @if($credit->credits > 0)
+                                      <td style="width: 15%;"><span @if($credit->credits < 0) class="label-danger" @else class="label-success" @endif> {{$credit->credits}} Credits </span></td>
+                                      <td></td>
+                                  @else
+                                      <td></td>
+                                      <td style="width: 15%;"><span @if($credit->credits < 0) class="label-danger" @else class="label-success" @endif> {{$credit->credits}} Credits </span></td>
+                                  @endif
+                                  
+                                  <td><span class="label-info">{{$credit->running_total()}}</span></td>
+                                  @if(!$credit->file_id)
+                                  <td style="width: 40%;">{{$credit->message_to_credit}}</td>
+                                  @else
+                                  @php $file = ECUApp\SharedCode\Models\File::where('id', $credit->file_id)->first(); @endphp
+                                  @if($file)
+                                      <td style="width: 40%;">
+                                          <img alt="" class="img-circle-car-history" src="{{ get_image_from_brand($file->brand) }}">
+                                          {{$file->vehicle()->Name}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}
+                                      </td>
+                                  @else
+                                      <td>File Deleted: {{$credit->file_id}}</td>
+                                  @endif
+                                  @endif
+                                  <td>@if($credit->credits > 0){{$credit->invoice_id}}@endif</td>
+                                  
+                                  @if(!$credit->file_id)
+                                      <td>{{$credit->price_payed}}€</td>
+                                  @else
+                                      <td></td>
+                                  @endif
+  
+                                </tr>
+                            @endforeach
+                          </tbody>
+                        </table>
+                        </div>
                       </div>
-                    </div>
+                      
                     <div id="evclogs" class="tab-pane fade">
                         <div class="col-xl-12 col-lg-12 col-md-12 m-t-20" >
                             <table class="table table-hover datatable">
