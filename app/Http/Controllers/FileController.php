@@ -10,6 +10,7 @@ use ECUApp\SharedCode\Controllers\NotificationsMainController;
 use ECUApp\SharedCode\Controllers\PaymentsMainController;
 use ECUApp\SharedCode\Controllers\MagicsportsMainController;
 use ECUApp\SharedCode\Models\AlientechFile;
+use ECUApp\SharedCode\Models\FilesStatusLog;
 use ECUApp\SharedCode\Models\Comment;
 use ECUApp\SharedCode\Models\Credit;
 use ECUApp\SharedCode\Models\ECU;
@@ -371,13 +372,15 @@ class FileController extends Controller
         $reply->save();
 
         $file->support_status = "open";
+        $this->changeStatusLog($file, 'open', 'support_status', "Customer sent a message in chat");
         $file->timer = NULL;
         $file->save();
 
         if($file->original_file_id != NULL){
             $ofile = File::findOrFail($file->original_file_id);
             $ofile->support_status = "open";
-            $file->timer = NULL;
+            $this->changeStatusLog($ofile, 'open', 'support_status', "Customer sent a message in chat in request file.");
+            $ofile->timer = NULL;
             $ofile->save();
         }
 
@@ -1115,6 +1118,25 @@ class FileController extends Controller
         return response()->json(['tempFileID' => $tempFile->id]);
 
 
+    }
+
+    public function changeStatusLog($file, $to, $type, $desc){
+
+        $new = new FilesStatusLog();
+        $new->type = $type;
+
+        if($type == 'status'){
+            $new->from = $file->status;
+        }
+        else if($type == 'support_status'){
+            $new->from = $file->support_status;
+        }
+
+        $new->to = $to;
+        $new->desc = $desc;
+        $new->file_id = $file->id;
+        $new->changed_by = Auth::user()->id;
+        $new->save();
     }
 
     /**
