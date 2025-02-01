@@ -371,15 +371,15 @@ class FileController extends Controller
         $reply->sent_by = 'engineer';
         $reply->save();
 
-        $file->support_status = "open";
         $this->changeStatusLog($file, 'open', 'support_status', "Customer sent a message in chat");
+        $file->support_status = "open";
         $file->timer = NULL;
         $file->save();
 
         if($file->original_file_id != NULL){
             $ofile = File::findOrFail($file->original_file_id);
-            $ofile->support_status = "open";
             $this->changeStatusLog($ofile, 'open', 'support_status', "Customer sent a message in chat in request file.");
+            $ofile->support_status = "open";
             $ofile->timer = NULL;
             $ofile->save();
         }
