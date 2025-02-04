@@ -1087,6 +1087,8 @@ div.file-type-buttons label > input + img {
 
             @foreach($file->files as $row)
 
+            @if($row->show_later == 0)
+
             @if($row->is_kess3_slave || $row->is_flex_file)
 
             @if($row->uploaded_successfully == 1)
@@ -1777,6 +1779,7 @@ div.file-type-buttons label > input + img {
 
 
           @endif
+          @endif
           {{-- @endif --}}
 
           @endforeach
@@ -2154,6 +2157,7 @@ div.file-type-buttons label > input + img {
             
 
             @foreach($file->files as $row)
+            @if($row->show_later == 0)
             <div class="main-file-box m-t-40">
               <span>
                 <i class="fa fa-upload top-box top-box-green"></i>
@@ -2472,6 +2476,8 @@ div.file-type-buttons label > input + img {
             </div>
             </div>
           </div>
+          @endif
+
           @endforeach
 
           @endforeach
