@@ -49,7 +49,7 @@
                     {{$file->vehicle()->Name}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}
                   </td>
                   <td>
-                    <span class="label @if($file->status == 'rejected') label-danger @elseif($file->status == 'completed') label-success @elseif($file->status == 'submitted') label-grey @else label-orange @endif">@if($file->status == 'rejected') Canceled  @else {{ucfirst($file->status)}} @endif</span>
+                    <span class="label @if($file->status == 'rejected') label-danger @elseif($file->status == 'completed') label-success @elseif($file->status == 'submitted') label-grey @else label-orange @endif">@if($file->status == 'rejected') Canceled @elseif($file->status == 'ready_to_send') Submitted  @else {{ucfirst($file->status)}} @endif</span>
                   </td>
                   <td>{{$file->created_at->diffForHumans();}}</td>
                   <td>{{$file->credits}} Credits</td>

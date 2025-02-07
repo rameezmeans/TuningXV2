@@ -493,7 +493,7 @@ div.file-type-buttons label > input + img {
                   <div>
                     <h3 class="m-t-5">
                         {{$file->vehicle()->Name}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}
-                        <span class="label @if($file->status == 'rejected') label-red @elseif($file->status == 'completed') label-green @elseif($file->status == 'submitted') label-grey @else label-orange @endif">@if($file->status == 'rejected') Canceled  @else{{ucfirst($file->status)}}@endif<i class="fa @if( $file->status == 'accepted') fa-check @elseif($file->status == 'rejected') fa-close @endif "></i></span>
+                        <span class="label @if($file->status == 'rejected') label-red @elseif($file->status == 'completed') label-green @elseif($file->status == 'submitted') label-grey @else label-orange @endif">@if($file->status == 'rejected') Canceled @elseif($file->status == 'ready_to_send') Submitted  @else{{ucfirst($file->status)}}@endif<i class="fa @if( $file->status == 'accepted') fa-check @elseif($file->status == 'rejected') fa-close @endif "></i></span>
                     </h3>
                     <p style="display: block;">{{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</p>
                   </div>
