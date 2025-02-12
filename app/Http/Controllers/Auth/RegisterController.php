@@ -86,55 +86,11 @@ class RegisterController extends Controller
         $unique = User::where('email', $data['email'])
         ->where('front_end_id', 2)->first();
 
-        // if($data['evc_customer_id']){
-        //     return Validator::make($data, [
-        //         'name' => ['required', 'string', 'max:255'],
-        //         'phone' => ['required', 'string', 'max:255'],
-        //         'language' => ['required', 'string', 'max:255'],
-        //         'address' => ['required', 'string', 'max:255'],
-        //         'zip' => ['required', 'string', 'max:255'],
-        //         'city' => ['required', 'string', 'max:255'],
-        //         'country' => ['required', 'string', 'max:255'],
-        //         'status' => ['required', 'string', 'max:255'],
-        //         'company_name' => ['max:255'],
-        //         'company_id' => ['max:255'],
-        //         'slave_tools_flag' => ['string', 'max:255'],
-        //         'master_tools' => [],
-        //         'slave_tools' => [],
-        //         'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-        //         'evc_customer_id' => ['required','unique:users', 'string'],
-        //         'password' => ['required', 'string', 'min:8', 'confirmed'],
-        //         'g-recaptcha-response' => ['required', new ReCaptcha]
-        //     ]);
-        // }
-        // else{
-
-            if($unique != NULL){
-                    
-                    return Validator::make($data, [
-                        'name' => ['required', 'string', 'max:255'],
-                        'phone' => ['required', 'string', 'max:255'],
-                        'language' => ['required', 'string', 'max:255'],
-                        'address' => ['required', 'string', 'max:255'],
-                        'zip' => ['required', 'string', 'max:255'],
-                        'city' => ['required', 'string', 'max:255'],
-                        'country' => ['required', 'string', 'max:255'],
-                        'status' => ['required', 'string', 'max:255'],
-                        'company_name' => ['max:255'],
-                        'company_id' => ['max:20'],
-                        'slave_tools_flag' => ['string', 'max:255'],
-                        'master_tools' => [],
-                        'slave_tools' => [],
-                        'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                        'password' => ['required', 'string', 'min:8', 'confirmed'],
-                        'g-recaptcha-response' => ['required', new ReCaptcha]
-                    ]);
-
-            }
-
-            else{
+        if($unique != NULL){
+                
                 return Validator::make($data, [
                     'name' => ['required', 'string', 'max:255'],
+                    'code' => ['required', 'string', 'max:255'],
                     'phone' => ['required', 'string', 'max:255'],
                     'language' => ['required', 'string', 'max:255'],
                     'address' => ['required', 'string', 'max:255'],
@@ -147,12 +103,35 @@ class RegisterController extends Controller
                     'slave_tools_flag' => ['string', 'max:255'],
                     'master_tools' => [],
                     'slave_tools' => [],
-                    'email' => ['required', 'string', 'email', 'max:255'],
+                    'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                     'password' => ['required', 'string', 'min:8', 'confirmed'],
                     'g-recaptcha-response' => ['required', new ReCaptcha]
                 ]);
+
         }
-        // }
+
+        else{
+            return Validator::make($data, [
+                'name' => ['required', 'string', 'max:255'],
+                'code' => ['required', 'string', 'max:255'],
+                'phone' => ['required', 'string', 'max:255'],
+                'language' => ['required', 'string', 'max:255'],
+                'address' => ['required', 'string', 'max:255'],
+                'zip' => ['required', 'string', 'max:255'],
+                'city' => ['required', 'string', 'max:255'],
+                'country' => ['required', 'string', 'max:255'],
+                'status' => ['required', 'string', 'max:255'],
+                'company_name' => ['max:255'],
+                'company_id' => ['max:20'],
+                'slave_tools_flag' => ['string', 'max:255'],
+                'master_tools' => [],
+                'slave_tools' => [],
+                'email' => ['required', 'string', 'email', 'max:255'],
+                'password' => ['required', 'string', 'min:8', 'confirmed'],
+                'g-recaptcha-response' => ['required', new ReCaptcha]
+            ]);
+        }
+        
     }
 
     function getCode($code){
@@ -494,20 +473,7 @@ class RegisterController extends Controller
                
             }
         }
-
-        // if(count($slaveTools) > 0){
         
-        //     foreach($slaveTools as $sid){
-
-        //         $record = new UserTool();
-        //         $record->type = 'slave';
-        //         $record->user_id = $user->id;
-        //         $record->tool_id = $sid;
-        //         $record->save();
-               
-        //     }
-        // }
-
         if($alreadyThereUser != NULL){
             $user->zohobooks_id = $alreadyThereUser->zohobooks_id;
             $user->elorus_id = $alreadyThereUser->elorus_id;
@@ -518,64 +484,6 @@ class RegisterController extends Controller
 
         (new ZohoMainController())->createNewZohoCustomer($user);
 
-        // $psr6CachePool = new ArrayCachePool();
-
-        // $oAuthClient = new \Weble\ZohoClient\OAuthClient('1000.4YI5VY0ZVV0RULDS2BEWFU0GGTVYBL', '51c344a63a6a5de0630f64e87ea3676ced55722589');
-
-        // $oAuthClient->setRefreshToken('1000.4c53b2c0d581b45ceac3f380cb37dc99.b95732ec540ced24f044dcffee32dfa7');
-        
-        // $oAuthClient->setRegion('eu');
-        // $oAuthClient->useCache($psr6CachePool);
-
-        // // setup the zoho books client
-        // $client = new \Webleit\ZohoBooksApi\Client($oAuthClient);
-        // $client->setOrganizationId('8745725');
-
-        // $zohoBooks = new \Webleit\ZohoBooksApi\ZohoBooks($client);
-
-        // try{
-
-        //     $sarchContact = $zohoBooks->contacts->getList(['contact_name_contains' => $user->name])->toArray();
-
-        //     if(empty($sarchContact)){
-
-        //         $contact = $zohoBooks->contacts->create(
-        
-        //             [
-        //                 "contact_name" => $user->name,
-        //                 "contact_email" => $user->email,
-        //                 "company_name" => $user->company_name,
-        //                 "contact_type" => "customer",
-        //                 "customer_sub_type" => "business",
-        //                 "is_portal_enabled" => false,
-        //                 "billing_address" => [
-        //                     "attention" =>  "Mr. ".$user->name,
-        //                     "address" => $user->address,
-        //                     "city" => $user->city,
-        //                     "zip" =>  $user->zip,
-        //                     "country" =>  $user->country,
-        //                     "phone" =>  $user->phone,
-        //                 ],
-        //             ]
-        
-        //         );
-
-        //         $user->zohobooks_id = $contact->contact_id;
-        //         $user->save();
-        //     }
-        //     else{
-
-        //         $value = reset($sarchContact);
-        //         $user->zohobooks_id = $value['contact_id'];
-        //         $user->save();
-
-        //     }
-
-            
-        // }
-        // catch(ClientException $e){
-        //     Log::info($e->getMessage());
-        // }
         
         try{
         
