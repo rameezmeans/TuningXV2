@@ -2481,6 +2481,10 @@ div.file-type-buttons label > input + img {
           @endforeach
 
           @endforeach
+
+          @php
+            $file = $ofile;
+          @endphp
           
           </div>
           

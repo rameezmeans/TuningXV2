@@ -795,6 +795,7 @@ class FileController extends Controller
         $kess3Label = Tool::where('label', 'Kess_V3')->where('type', 'slave')->first();
 
         $file = $this->filesMainObj->getFile($id, $user);
+        $ofile = $this->filesMainObj->getFile($id, $user);
         $vehicle = $this->filesMainObj->getVehicle($file);
         
         $slaveTools =  $user->tools_slave;
@@ -806,7 +807,7 @@ class FileController extends Controller
 
         $showComments = $this->filesMainObj->getShowComments($selectedOptions, $comments);
         
-        return view('files.show_file', ['user' => $user, 'showComments' => $showComments, 'comments' => $comments,'kess3Label' => $kess3Label,  'file' => $file, 'masterTools' => $masterTools,  'slaveTools' => $slaveTools, 'vehicle' => $vehicle ]);
+        return view('files.show_file', ['user' => $user, 'showComments' => $showComments, 'comments' => $comments,'kess3Label' => $kess3Label,  'file' => $file, 'ofile' => $ofile, 'masterTools' => $masterTools,  'slaveTools' => $slaveTools, 'vehicle' => $vehicle ]);
     }
 
     public function addOfferToFile(Request $request) {
@@ -864,9 +865,7 @@ class FileController extends Controller
     }
 
     public function postStages(Request $request) {
-
-        // dd($request->all());
-
+        
         $stage = Service::FindOrFail($request->stage);
         $stageName = $stage->name;
 
