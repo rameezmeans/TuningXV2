@@ -492,10 +492,10 @@ div.file-type-buttons label > input + img {
                   <img alt="" class="img-circle-car-history" src="{{ get_image_from_brand($file->brand) }}">
                   <div>
                     <h3 class="m-t-5">
-                        {{$file->vehicle()->Name}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}
+                        @if($file->vehicle()){{$file->vehicle()->Name}} @endif {{ $file->engine }}
                         <span class="label @if($file->status == 'rejected') label-red @elseif($file->status == 'completed') label-green @elseif($file->status == 'submitted') label-grey @else label-orange @endif">@if($file->status == 'rejected') Canceled @elseif($file->status == 'ready_to_send') Submitted  @else{{ucfirst($file->status)}}@endif<i class="fa @if( $file->status == 'accepted') fa-check @elseif($file->status == 'rejected') fa-close @endif "></i></span>
                     </h3>
-                    <p style="display: block;">{{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</p>
+                    <p style="display: block;">{{ $file->engine }}</p>
                   </div>
                 </span>
         </div>
