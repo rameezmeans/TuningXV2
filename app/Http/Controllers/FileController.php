@@ -371,17 +371,24 @@ class FileController extends Controller
         $reply->sent_by = 'engineer';
         $reply->save();
 
-        $this->changeStatusLog($file, 'open', 'support_status', "Customer sent a message in chat");
-        $file->support_status = "open";
-        $file->timer = NULL;
-        $file->save();
+        if($file->support_status == 'closed'){
+
+            $this->changeStatusLog($file, 'open', 'support_status', "Customer sent a message in chat");
+            $file->support_status = "open";
+            $file->timer = NULL;
+            $file->save();
+
+        }
 
         if($file->original_file_id != NULL){
             $ofile = File::findOrFail($file->original_file_id);
-            $this->changeStatusLog($ofile, 'open', 'support_status', "Customer sent a message in chat in request file.");
-            $ofile->support_status = "open";
-            $ofile->timer = NULL;
-            $ofile->save();
+
+            if($ofile->support_status == 'closed'){
+                $this->changeStatusLog($ofile, 'open', 'support_status', "Customer sent a message in chat in request file.");
+                $ofile->support_status = "open";
+                $ofile->timer = NULL;
+                $ofile->save();
+            }
         }
 
         $engPermissions = array(
