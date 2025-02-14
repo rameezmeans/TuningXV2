@@ -1111,7 +1111,7 @@ select {
                                   @if($file)
                                       <td style="width: 40%;">
                                           <img alt="" class="img-circle-car-history" src="{{ get_image_from_brand($file->brand) }}">
-                                          {{$file->vehicle()->Name}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}
+                                          @if($file->vehicle()){{$file->vehicle()->Name}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }} @else {{ $file->engine }} @endif
                                       </td>
                                   @else
                                       <td>File Deleted: {{$credit->file_id}}</td>
