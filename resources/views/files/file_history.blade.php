@@ -46,7 +46,7 @@
                 <tr class="redirect-click @if($file->checked_by == 'engineer') checked @endif" href="#" data-redirect="{{route('file', $file->id)}}">
                   <td>
                     <img alt="" class="img-circle-car-history" src="{{ get_image_from_brand($file->brand) }}">
-                    @if(file->vehicle()) {{$file->vehicle()->Name}} @endif {{ $file->engine }}
+                    @if($file->vehicle()) {{$file->vehicle()->Name}} @endif {{ $file->engine }}
                   </td>
                   <td>
                     <span class="label @if($file->status == 'rejected') label-danger @elseif($file->status == 'completed') label-success @elseif($file->status == 'submitted') label-grey @else label-orange @endif">@if($file->status == 'rejected') Canceled @elseif($file->status == 'ready_to_send') Submitted  @else {{ucfirst($file->status)}} @endif</span>
