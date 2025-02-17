@@ -65,7 +65,7 @@ body {
                                     </span>
                                 @enderror
                             </div>
-                            <input name="code" value="" id="code" type="hidden">
+                            <input name="code" value="1" id="code" type="hidden">
                             <div class="form-group">
                             <label for="exampleInputEmail1">Email *</label>
                                 <input type="text" value="{{old('email')}}" id="exampleInputEmail1" name="email" class="form-control @error('email') is-invalid @enderror" required="required" placeholder="{{__('Email')}}">
