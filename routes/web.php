@@ -21,6 +21,11 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
+Route::get('/info', function () {
+    phpinfo();
+});
+
+
 Route::get('/test', function () {
 
     // abort(404);
