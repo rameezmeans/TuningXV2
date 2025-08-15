@@ -875,10 +875,11 @@ class FileController extends Controller
         
         $stage = Service::FindOrFail($request->stage);
         $stageName = $stage->name;
+        $options = $request->options;
 
-        $rules = $this->filesMainObj->getStep3ValidationStage($stageName);
+        $validation = $this->filesMainObj->getStep3ValidationStage($stageName, $options);
 
-        $request->validate($rules);
+        $request->validate($validation['rules'], $validation['messages']);
         
         $fileID = $request->file_id;
         // $DTCComments = $request->dtc_off_comments;
@@ -893,8 +894,6 @@ class FileController extends Controller
         $servieCredits = 0;
 
         $servieCredits += $this->filesMainObj->saveFileStages($file, $stage, $this->frontendID);
-
-        $options = $request->options;
 
         $servieCredits += $this->filesMainObj->saveFileOptions($file, $stage, $options, $this->frontendID);
 
