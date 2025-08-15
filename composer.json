@@ -10,8 +10,10 @@
   "require": {
     "php": "^8.2",
     "barryvdh/laravel-dompdf": "^3.1.1",
+    "biscolab/laravel-recaptcha": "^6.0",
     "cba85/eu-vat-validation": "dev-master",
     "danielebarbaro/laravel-vat-eu-validator": "^2.0",
+    "darryldecode/cart": "^4.2.5",
     "drahosistvan/vatvalidation": "^1.0",
     "guzzlehttp/guzzle": "^7.0",
     "laravel/cashier": "^15.0.0",
@@ -33,10 +35,9 @@
     "srmklive/paypal": "^3.0",
     "stevebauman/location": "*",
     "stripe/stripe-php": "^16.2",
+    "symfony/http-client": "^7.3",
     "twilio/sdk": "^6.44",
-    "webleit/zohobooksapi": "^5.5",
-    "darryldecode/cart": "^4.2.5",
-    "biscolab/laravel-recaptcha": "^6.0"
+    "webleit/zohobooksapi": "^5.5"
   },
   "repositories": [
     {
@@ -96,6 +97,7 @@
     "preferred-install": "dist",
     "sort-packages": true,
     "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true,
       "pestphp/pest-plugin": true,
       "php-http/discovery": true
     }

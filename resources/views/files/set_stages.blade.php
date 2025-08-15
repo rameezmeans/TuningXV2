@@ -480,7 +480,7 @@ p.tuning-resume {
                         @if($option['customers_comments_vehicle_type'] == NULL)
                           <div class="comments-area-{{$option['id']}} hide">
                                 <div class="col-xl-12 col-md-12 " style="padding: 5px;">
-                                    <textarea placeholder="{{$option['customers_comments_placeholder_text']}}" name="option_comments[{{$option['id']}}]" style="background: white;  height:100%; width:100%;"></textarea>
+                                    <textarea @if($option['mandatory']) class="mandatory" @endif placeholder="{{$option['customers_comments_placeholder_text']}}" name="option_comments[{{$option['id']}}]" style="background: white;  height:100%; width:100%;"></textarea>
                                 </div>
                           </div>
                           @else
@@ -488,7 +488,7 @@ p.tuning-resume {
                             @if(in_array($file->vehicle()->type,explode(',',$option['customers_comments_vehicle_type'])))
                               <div class="comments-area-{{$option['id']}} hide">
                                 <div class="col-xl-12 col-md-12 " style="padding: 5px;">
-                                    <textarea placeholder="{{$option['customers_comments_placeholder_text']}}" name="option_comments[{{$option['id']}}]" style="background: white;  height:100%; width:100%;"></textarea>
+                                    <textarea @if($option['mandatory']) class="mandatory" @endif placeholder="{{$option['customers_comments_placeholder_text']}}" name="option_comments[{{$option['id']}}]" style="background: white;  height:100%; width:100%;"></textarea>
                                 </div>
                               </div>
                             @endif
