@@ -179,4 +179,9 @@ Route::post('/dtc_lookup', [App\Http\Controllers\HomeController::class, 'getDTCD
 Route::get('/create_test_customer/{id}', [App\Http\Controllers\PaymentsController::class, 'createTestElorusCustomer'])->name('create-customer-elorus');
 
 
+$tuningxMaintenanceMode = ECUApp\SharedCode\Models\IntegerMeta::where('key', 'tuningx_maintenance_mode')->first()->value;
+
+if($tuningxMaintenanceMode){
+    return redirect('login')->with(Auth::logout());
+}
 
