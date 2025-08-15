@@ -400,6 +400,8 @@ class PaymentsController extends Controller
 
         $this->vivaCreds();
 
+        $sessionID = null; // <-- define it first
+
         $package = false;
         $offer = false;
         $fileFlag = false;
@@ -484,6 +486,9 @@ class PaymentsController extends Controller
 
             // dd($response);
             
+        }
+        else{
+            $sessionID = $request->get('t');
         }
 
         if($offer){ 
