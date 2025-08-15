@@ -340,6 +340,16 @@ p.tuning-resume {
         </div>
         <div class="i-content-block price-level">
 
+          @if (isset($errors) && $errors->any())
+              <div class="alert alert-danger">
+                  <ul class="mb-0">
+                      @foreach ($errors->all() as $error)
+                          <li>{{ $error }}</li>
+                      @endforeach
+                  </ul>
+              </div>
+          @endif
+
         <form method="POST" action="{{ route('post-stages') }}"  enctype="application/x-www-form-urlencoded" name="file_upload_tuning" id="file-upload-tuning-form" autocomplete="off">
             <input type="hidden" value="{{ $file->id }}" name="file_id" id="file_id">
             <input type="hidden" id="file_tool_type" value="{{$file->tool_type}}">
