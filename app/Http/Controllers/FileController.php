@@ -33,6 +33,7 @@ use ECUApp\SharedCode\Models\TemporaryFile;
 use ECUApp\SharedCode\Models\Tool;
 use ECUApp\SharedCode\Models\User;
 use ECUApp\SharedCode\Models\Vehicle;
+use ECUApp\SharedCode\Models\BrandECUComments;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use ECUApp\SharedCode\Models\MagicEncryptedFile;
