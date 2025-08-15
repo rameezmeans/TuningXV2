@@ -568,6 +568,8 @@ p.tuning-resume {
     $(document).ready(function(){
 
       function checkMandatoryFields() {
+
+        console.log('here we are');
         // Get all visible .comments-area-* sections (no 'hide' class)
         const $visibleSections = $('[class^="comments-area-"]').not('.hide');
 
