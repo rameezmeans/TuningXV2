@@ -130,6 +130,9 @@ Route::post('offer_checkout', [App\Http\Controllers\PaymentsController::class, '
 Route::post('buy_offer', [App\Http\Controllers\PaymentsController::class, 'buyOffer'])->name('buy.offer');
 Route::post('acm_file_upload', [App\Http\Controllers\FileController::class, 'acmFileUpload'])->name('acm-file-upload');
 
+Route::post('get-brand-ecu-comment', [App\Http\Controllers\FileController::class, 'getCommentByBrandEcuUploadType'])->name('get-brand-ecu-comment');
+Route::post('get-brand-ecu-comment-download', [App\Http\Controllers\FileController::class, 'getCommentByBrandEcuDownloadType'])->name('get-brand-ecu-comment-download');
+
 Route::post('/viva_payment', [App\Http\Controllers\PaymentsController::class, 'redirectViva'])->name('checkout.viva');
 Route::post('/viva_payment_packages', [App\Http\Controllers\PaymentsController::class, 'redirectVivaPackages'])->name('checkout.packages.viva');
 Route::post('/viva_payment_file', [App\Http\Controllers\PaymentsController::class, 'redirectVivaFile'])->name('checkout.file.viva');

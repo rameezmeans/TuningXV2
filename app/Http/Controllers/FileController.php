@@ -183,6 +183,50 @@ class FileController extends Controller
         return response()->json( ['msg' => 'status not set to fail', 'fail' => 0, 'file_id' => $file->id] );
     }
 
+    public function getCommentByBrandEcuDownloadType(Request $request){
+        
+        $brand = $request->input('brand');
+        $ecu = $request->input('ecu');
+
+        $comment = BrandECUComments::where('brand', $brand)
+            ->where('ecu', $ecu)
+            ->where('type', 'download')
+            ->first();
+
+        if ($comment) {
+            return response()->json([
+                'success' => true,
+                'comment' => $comment->comment
+            ]);
+        }
+
+        return response()->json([
+            'success' => false
+        ]);
+    }
+    
+    public function getCommentByBrandEcuUploadType(Request $request)
+    {
+        $brand = $request->input('brand');
+        $ecu = $request->input('ecu');
+
+        $comment = BrandECUComments::where('brand', $brand)
+            ->where('ecu', $ecu)
+            ->where('type', 'upload')
+            ->first();
+
+        if ($comment) {
+            return response()->json([
+                'success' => true,
+                'comment' => $comment->comment
+            ]);
+        }
+
+        return response()->json([
+            'success' => false
+        ]);
+    }
+
     public function acmFileUpload(Request $request){
 
         $file = File::findOrFail($request->file_id);
