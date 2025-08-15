@@ -407,6 +407,7 @@ p.tuning-resume {
                     
                 </div>
                 <input type="hidden" id="total_credits_to_submit" name="total_credits_to_submit" value="@if($file->tool_type == 'master'){{$firstStage->tuningx_credits}}@else{{$firstStage->tuningx_slave_credits}}@endif">
+                <input type="hidden" id="mandatory_field" name="mandatory_field" value="">
                 <div class="text-center">
                     <button class="btn btn-red m-t-10" type="submit" id="btn-final-submit">
                       <i class="fa fa-arrow-right"></i> Go to Checkout
@@ -555,6 +556,78 @@ p.tuning-resume {
     // };
 
     $(document).ready(function(){
+
+      function checkMandatoryFields() {
+        // Get all visible .comments-area-* sections (no 'hide' class)
+        const $visibleSections = $('[class^="comments-area-"]').not('.hide');
+
+        // If none are visible, set value to empty and stop
+        if ($visibleSections.length === 0) {
+            $('#mandatory_field').val('');
+            return;
+        }
+
+        // Loop through each visible section and check if all its .mandatory textareas are filled
+        let allFilled = true;
+
+        $visibleSections.each(function () {
+            const $section = $(this);
+            const emptyExists = $section.find('textarea.mandatory').toArray().some(function (textarea) {
+                return $(textarea).val().trim() === '';
+            });
+
+            if (emptyExists) {
+                allFilled = false;
+                return false; // Exit loop early
+            }
+        });
+
+        // Set value based on condition
+        $('#mandatory_field').val(allFilled ? '1' : '');
+    }
+
+    // Check on input/change in any .mandatory textarea
+    $(document).on('input', 'textarea.mandatory', function () {
+        checkMandatoryFields();
+    });
+
+    // Optional: run once on page load
+    checkMandatoryFields();
+
+      const brand = "{{ $file->brand }}";
+        const ecu = "{{ $file->ecu }}";
+
+        $.ajax({
+            url: "{{ route('get-brand-ecu-comment') }}",
+            type: 'POST',
+            headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+            data: {
+                brand: brand,
+                ecu: ecu,
+            },
+            success: function (response) {
+                if (response.success) {
+                    Swal.fire(
+                        'Note',
+                        response.comment,
+                        'warning'
+                    );
+
+                    $('.swal2-confirm').attr("disabled", true);
+                    setTimeout(function () {
+                        $('.swal2-confirm').attr("disabled", false);
+                    }, 5000);
+                }
+                // If no comment, do nothing (silent fail)
+            },
+            error: function () {
+                Swal.fire(
+                    'Error',
+                    'Something went wrong while fetching the comment.',
+                    'error'
+                );
+            }
+        });
 
       let stage_id = 1;
 
