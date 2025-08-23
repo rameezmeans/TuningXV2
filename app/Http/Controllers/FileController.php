@@ -425,16 +425,16 @@ class FileController extends Controller
 
         }
 
-        if($file->original_file_id != NULL){
-            $ofile = File::findOrFail($file->original_file_id);
+        // if($file->original_file_id != NULL){
+        //     $ofile = File::findOrFail($file->original_file_id);
 
-            if($ofile->support_status == 'closed'){
-                $this->changeStatusLog($ofile, 'open', 'support_status', "Customer sent a message in chat in request file.");
-                $ofile->support_status = "open";
-                $ofile->timer = NULL;
-                $ofile->save();
-            }
-        }
+        //     if($ofile->support_status == 'closed'){
+        //         $this->changeStatusLog($ofile, 'open', 'support_status', "Customer sent a message in chat in request file.");
+        //         $ofile->support_status = "open";
+        //         $ofile->timer = NULL;
+        //         $ofile->save();
+        //     }
+        // }
 
         $engPermissions = array(
             0 => 'msg_cus_eng_email',
