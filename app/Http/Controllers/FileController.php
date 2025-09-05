@@ -401,25 +401,22 @@ class FileController extends Controller
      */
     public function fileEngineersNotes(Request $request)
     {
-        // 1) Base validation (includes file rule)
-        $validator = Validator::make($request->all(), [
-            'egnineers_internal_notes' => [
+        // Validate inputs
+        $validated = $request->validate([
+            'events_internal_notes' => [
                 'required',
                 'max:1024',
+                // Prevent PHP or JS code in notes
                 'not_regex:/<\s*script/i',
                 'not_regex:/<\?php/i',
             ],
-            'engineers_attachement' => [
+            'events_attachement' => [
                 'nullable',
                 'file',
                 'max:20480', // 20 MB
                 'mimes:bin,ori,zip,rar,txt,pdf,jpg,jpeg,png',
             ],
         ]);
-
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        }
 
         $file = File::findOrFail($request->file_id);
 
