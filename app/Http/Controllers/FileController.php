@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use Darryldecode\Cart\Validators\Validator;
 use ECUApp\SharedCode\Controllers\AlientechMainController;
 use ECUApp\SharedCode\Controllers\AutotunerMainController;
 use ECUApp\SharedCode\Controllers\FilesMainController;
@@ -360,8 +361,21 @@ class FileController extends Controller
 
         $file = File::findOrFail($request->file_id);
 
+        // Validate inputs
         $validated = $request->validate([
-            'events_internal_notes' => 'required|max:1024'
+            'events_internal_notes' => [
+                'required',
+                'max:1024',
+                // Prevent PHP or JS code in notes
+                'not_regex:/<\s*script/i',
+                'not_regex:/<\?php/i',
+            ],
+            'events_attachement' => [
+                'nullable',
+                'file',
+                'max:20480', // 20 MB
+                'mimes:bin,ori,zip,rar,txt,pdf,jpg,jpeg,png',
+            ],
         ]);
 
         $reply = new FileInternalEvent();
@@ -387,9 +401,25 @@ class FileController extends Controller
      */
     public function fileEngineersNotes(Request $request)
     {
-        $validated = $request->validate([
-            'egnineers_internal_notes' => 'required|max:1024'
+        // 1) Base validation (includes file rule)
+        $validator = Validator::make($request->all(), [
+            'egnineers_internal_notes' => [
+                'required',
+                'max:1024',
+                'not_regex:/<\s*script/i',
+                'not_regex:/<\?php/i',
+            ],
+            'engineers_attachement' => [
+                'nullable',
+                'file',
+                'max:20480', // 20 MB
+                'mimes:bin,ori,zip,rar,txt,pdf,jpg,jpeg,png',
+            ],
         ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
 
         $file = File::findOrFail($request->file_id);
 
@@ -1133,36 +1163,44 @@ class FileController extends Controller
         $user = Auth::user();
         $file = $request->file('file');
 
+        // Validate file extension
+        $allowedExtensions = ['bin', 'ori', 'zip', 'rar', 'txt']; // add all extensions you allow
+        $extension = strtolower($file->getClientOriginalExtension());
+
+        if (in_array($extension, ['php', 'js'])) {
+            return response()->json([
+                'error' => 'Invalid file type. PHP and JS files are not allowed.'
+            ], 400);
+        }
+
+        if (!in_array($extension, $allowedExtensions)) {
+            return response()->json([
+                'error' => 'Invalid file type. Allowed types: ' . implode(', ', $allowedExtensions)
+            ], 400);
+        }
+
+        // Now safe to continue
         $toolType = $request->tool_type_for_dropzone;
-        $toolID = $request->tool_for_dropzone;
+        $toolID   = $request->tool_for_dropzone;
 
         $tempFile = $this->filesMainObj->createTemporaryFile($user, $file, $toolType, $toolID, $this->frontendID);
 
         $kess3Label = Tool::where('label', 'Kess_V3')->where('type', 'slave')->first();
-
-        if($toolType == 'slave' && $tempFile->tool_id == $kess3Label->id){
-
+        if ($toolType == 'slave' && $tempFile->tool_id == $kess3Label->id) {
             $path = $this->filesMainObj->getPath($file, $tempFile);
             $this->alientechMainObj->saveGUIDandSlotIDToDownloadLater($path , $tempFile->id);
-            
         }
 
         $flexLabel = Tool::where('label', 'Flex')->where('type', 'slave')->first();
-
-        if($toolType == 'slave' && $tempFile->tool_id == $flexLabel->id){
-            
+        if ($toolType == 'slave' && $tempFile->tool_id == $flexLabel->id) {
             $path = $this->filesMainObj->getPath($file, $tempFile);
             $this->magicMainObj->magicDecrypt($path , $tempFile->id);
-            
         }
 
         $autoTunerLabel = Tool::where('label', 'Autotuner')->where('type', 'slave')->first();
-
-        if($toolType == 'slave' && $tempFile->tool_id == $autoTunerLabel->id){
-            
+        if ($toolType == 'slave' && $tempFile->tool_id == $autoTunerLabel->id) {
             $path = $this->filesMainObj->getPath($file, $tempFile);
             $this->autoTunerMainObj->autoturnerDecrypt($path , $tempFile->id);
-            
         }
 
         return response()->json(['tempFileID' => $tempFile->id]);
