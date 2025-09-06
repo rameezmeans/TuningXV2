@@ -408,14 +408,14 @@ class FileController extends Controller
     public function fileEngineersNotes(Request $request)
     {
         $validated = $request->validate([
-            'events_internal_notes' => [
+            'egnineers_internal_notes' => [
                 'required',
                 'max:1024',
                 // Prevent PHP or JS code in notes
                 'not_regex:/<\s*script/i',
                 'not_regex:/<\?php/i',
             ],
-            'events_attachement' => [
+            'engineers_attachement' => [
                 'nullable',
                 'file',
                 'max:20480', // 20 MB
