@@ -1341,7 +1341,12 @@ div.file-type-buttons label > input + img {
                             <div class="form-group">
                               <label for="exampleInputName1">Attachment</label>
                             <input type="file" name="events_attachement" class="form-control" id="events_attachement">
-                            </div>
+                              @error('events_attachement')
+                                  <span class="invalid-feedback" role="alert">
+                                      <strong>{{ $message }}</strong>
+                                  </span>
+                              @enderror
+                          </div>
 
                             <button type="submit" class="btn btn-info"><i class="fa fa-submit"></i> Submit</button>
                           
@@ -1655,7 +1660,13 @@ div.file-type-buttons label > input + img {
                           <div class="form-group">
                             <label for="exampleInputName1">Attachment</label>
                           <input type="file" name="engineers_attachement" class="form-control" id="engineers_attachement">
-                          </div>
+                        
+                            @error('engineers_attachement')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
 
                           <button type="submit" class="btn btn-info"><i class="fa fa-submit"></i> Submit</button>
                         
